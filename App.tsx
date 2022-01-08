@@ -6,7 +6,8 @@ import SetWalkScreen from "./src/screens/SetWalkScreen";
 export default function App() {
   return (
     <View style={styles.container}>
-      <SetWalkScreen />
+      <MapScreen />
+      {/* <SetWalkScreen /> */}
       <StatusBar style="auto" />
     </View>
   );

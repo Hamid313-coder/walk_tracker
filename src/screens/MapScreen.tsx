@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Dimensions, StyleSheet, View } from "react-native";
+import {
+  ActivityIndicator,
+  Dimensions,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
+import { Card, Input } from "react-native-elements";
+import colors from "../constants/colors";
 function MapScreen(props: any) {
   const [curLocation, setCurLocation] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +46,13 @@ function MapScreen(props: any) {
     );
   }
   return (
-    <View>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "flex-start",
+      }}
+    >
       {curLocation && (
         <MapView
           initialRegion={{
@@ -67,14 +81,51 @@ function MapScreen(props: any) {
           )}
         </MapView>
       )}
+      <View
+        style={{
+          width: width,
+          alignItems: "center",
+          padding: 10,
+          justifyContent: "space-evenly",
+          flex: 1,
+        }}
+      >
+        <Card
+          containerStyle={{
+            height: 75,
+            width: "100%",
+            borderRadius: 5,
+            justifyContent: "center",
+          }}
+        >
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                color: colors.primary,
+                fontWeight: "bold",
+              }}
+            >
+              Walked steps
+            </Text>
+            <Text>232</Text>
+          </View>
+        </Card>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   map: {
-    height: Dimensions.get("screen").height,
+    height: Dimensions.get("screen").height * 0.56,
     width: Dimensions.get("screen").width,
+  },
+  text: {
+    color: "white",
+    fontSize: 18,
   },
 });
 

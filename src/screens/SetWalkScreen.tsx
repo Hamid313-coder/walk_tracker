@@ -1,18 +1,24 @@
 import React from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Button, Input } from "react-native-elements";
 import colors from "../constants/colors";
+
+const width = Dimensions.get("screen").width;
+const height = Dimensions.get("screen").height;
 const SetWalkScreen = () => {
   return (
-    <ScrollView
-      contentContainerStyle={{
-        justifyContent: "center",
-        alignItems: "center",
-        flexGrow: 1,
-      }}
-    >
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text style={{ color: colors.primary, fontSize: 28 }}>
+        <Text
+          style={{ color: colors.primary, fontSize: width > 356 ? 28 : 23 }}
+        >
           Let's have some walking!
         </Text>
         <Image
@@ -20,26 +26,14 @@ const SetWalkScreen = () => {
           style={styles.image}
           resizeMode="contain"
         />
-        <Text
-          style={{
-            color: colors.secondary,
-            fontSize: 16,
-            textAlign: "center",
-            paddingHorizontal: 20,
-          }}
-        >
+        <Text style={styles.guide}>
           Set the number of steps you want walk to today!
         </Text>
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            marginVertical: 10,
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: colors.secondary }}>Number of steps: </Text>
+        <View style={styles.input}>
+          <Text style={{ color: colors.secondary, fontSize: 15 }}>
+            Number of steps:{" "}
+          </Text>
           <Input
             keyboardType="numeric"
             inputStyle={{
@@ -47,28 +41,46 @@ const SetWalkScreen = () => {
               textAlign: "center",
               fontSize: 16,
             }}
-            containerStyle={{ borderColor: colors.secondary, width: 70 }}
+            containerStyle={{
+              borderColor: colors.secondary,
+              width: width * 0.17,
+            }}
             inputContainerStyle={{ borderBottomColor: colors.secondary }}
           />
         </View>
-        <Button
-          title="Set & Start"
-          buttonStyle={{
-            width: 160,
-            height: 50,
-            backgroundColor: colors.primary,
-            borderRadius: 30,
-          }}
-        />
+        <Button title="Set & Start" buttonStyle={styles.button} />
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexGrow: 1,
+  },
   image: {
-    width: 350,
-    height: 350,
+    width: width * 0.95,
+    height: height * 0.4,
+  },
+  button: {
+    width: width * 0.35,
+    height: height * 0.06,
+    backgroundColor: colors.primary,
+    borderRadius: (height * 0.06) / 2,
+  },
+  input: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginVertical: 10,
+    alignItems: "center",
+  },
+  guide: {
+    color: colors.secondary,
+    fontSize: 16,
+    textAlign: "center",
+    paddingHorizontal: 20,
   },
 });
 
