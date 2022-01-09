@@ -4,15 +4,19 @@ import {
   Dimensions,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { Card, Input } from "react-native-elements";
+import { Dialog } from "react-native-elements";
 import colors from "../constants/colors";
+import StyledCard from "../components/StyledCard";
+// import Dialog from "react-native-dialog";
 function MapScreen(props: any) {
   const [curLocation, setCurLocation] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const { width, height } = Dimensions.get("window");
   const SCREEN_HEIGHT = height;
   const SCREEN_WIDTH = width;
@@ -53,6 +57,10 @@ function MapScreen(props: any) {
         justifyContent: "flex-start",
       }}
     >
+      <Dialog onBackdropPress={() => setIsVisible(false)} isVisible={isVisible}>
+        <Dialog.Title title="hello" />
+        <Text></Text>
+      </Dialog>
       {curLocation && (
         <MapView
           initialRegion={{
@@ -90,29 +98,19 @@ function MapScreen(props: any) {
           flex: 1,
         }}
       >
-        <Card
-          containerStyle={{
-            height: 75,
+        <TouchableOpacity
+          onPress={() => setIsVisible(true)}
+          style={{
             width: "100%",
-            borderRadius: 5,
+            alignItems: "center",
             justifyContent: "center",
+            maxHeight: 75,
           }}
         >
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <Text
-              style={{
-                fontSize: 18,
-                color: colors.primary,
-                fontWeight: "bold",
-              }}
-            >
-              Walked steps
-            </Text>
-            <Text>232</Text>
-          </View>
-        </Card>
+          <StyledCard title="Specified steps" rest="234" />
+        </TouchableOpacity>
+        <StyledCard title="Walked steps" rest="223234" />
+        <StyledCard title="Walked distance" rest="2343m" />
       </View>
     </View>
   );
