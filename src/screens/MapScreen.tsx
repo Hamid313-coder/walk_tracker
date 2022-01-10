@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { Dialog } from "react-native-elements";
+import { Dialog, Input } from "react-native-elements";
 import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
 // import Dialog from "react-native-dialog";
@@ -58,8 +58,35 @@ function MapScreen(props: any) {
       }}
     >
       <Dialog onBackdropPress={() => setIsVisible(false)} isVisible={isVisible}>
-        <Dialog.Title title="hello" />
-        <Text></Text>
+        <Dialog.Title
+          title="Are you sure to change the number of steps?"
+          titleStyle={{ color: colors.primary }}
+        />
+        <Input
+          keyboardType="numeric"
+          textAlign="center"
+           
+        />
+
+        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+          <View style={{ overflow: "hidden", borderRadius: 3 }}>
+            <Dialog.Button
+              buttonStyle={{ backgroundColor: "transparent" }}
+              title="Okay"
+              titleStyle={{ color: colors.secondary }}
+              onPress={() => console.log("pressed okay!")}
+            />
+          </View>
+          <View style={{ overflow: "hidden", borderRadius: 3 }}>
+            <Dialog.Button
+              containerStyle={{ marginLeft: 15 }}
+              buttonStyle={{ backgroundColor: "transparent" }}
+              title="Cancel"
+              titleStyle={{ color: colors.secondary }}
+              onPress={() => setIsVisible(false)}
+            />
+          </View>
+        </View>
       </Dialog>
       {curLocation && (
         <MapView
