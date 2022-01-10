@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { Card } from "react-native-elements";
 import colors from "../constants/colors";
 
@@ -17,7 +17,7 @@ function StyledCard(props: any) {
 
 const styles = StyleSheet.create({
   container: {
-    height: 75,
+    height: Dimensions.get("screen").height * 0.075,
     width: "100%",
     borderRadius: 5,
     justifyContent: "center",

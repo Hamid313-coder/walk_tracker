@@ -3,7 +3,6 @@ import {
   ActivityIndicator,
   Dimensions,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -12,14 +11,14 @@ import * as Location from "expo-location";
 import { Dialog, Input } from "react-native-elements";
 import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 // import Dialog from "react-native-dialog";
+const { width, height } = Dimensions.get("window");
 function MapScreen(props: any) {
   const [curLocation, setCurLocation] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const { width, height } = Dimensions.get("window");
-  const SCREEN_HEIGHT = height;
-  const SCREEN_WIDTH = width;
+
   const ASPECT_RATIO = width / height;
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
@@ -44,8 +43,8 @@ function MapScreen(props: any) {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="orange" />
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
@@ -54,7 +53,6 @@ function MapScreen(props: any) {
       style={{
         flex: 1,
         alignItems: "center",
-        justifyContent: "flex-start",
       }}
     >
       <Dialog onBackdropPress={() => setIsVisible(false)} isVisible={isVisible}>
@@ -62,12 +60,7 @@ function MapScreen(props: any) {
           title="Are you sure to change the number of steps?"
           titleStyle={{ color: colors.primary }}
         />
-        <Input
-          keyboardType="numeric"
-          textAlign="center"
-           
-        />
-
+        <Input keyboardType="numeric" textAlign="center" />
         <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
           <View style={{ overflow: "hidden", borderRadius: 3 }}>
             <Dialog.Button
@@ -116,23 +109,10 @@ function MapScreen(props: any) {
           )}
         </MapView>
       )}
-      <View
-        style={{
-          width: width,
-          alignItems: "center",
-          padding: 10,
-          justifyContent: "space-evenly",
-          flex: 1,
-        }}
-      >
+      <View style={styles.bottomContainer}>
         <TouchableOpacity
           onPress={() => setIsVisible(true)}
-          style={{
-            width: "100%",
-            alignItems: "center",
-            justifyContent: "center",
-            maxHeight: 75,
-          }}
+          style={styles.touch}
         >
           <StyledCard title="Specified steps" rest="234" />
         </TouchableOpacity>
@@ -145,13 +125,22 @@ function MapScreen(props: any) {
 
 const styles = StyleSheet.create({
   map: {
-    height: Dimensions.get("screen").height * 0.56,
-    width: Dimensions.get("screen").width,
+    height: height * 0.56,
+    width: width,
   },
-  text: {
-    color: "white",
-    fontSize: 18,
+  bottomContainer: {
+    width: width,
+    alignItems: "center",
+    padding: 10,
+    justifyContent: "space-evenly",
+    flex: 1,
   },
+  touch: {
+    width: "100%",
+    alignItems: "center",
+    height: height * 0.1,
+  },
+  center: { flex: 1, justifyContent: "center", alignItems: "center" },
 });
 
 export default MapScreen;

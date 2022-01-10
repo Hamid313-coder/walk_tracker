@@ -8,6 +8,7 @@ import {
   View,
 } from "react-native";
 import { Button, Input } from "react-native-elements";
+import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
 
 const width = Dimensions.get("screen").width;
@@ -48,7 +49,10 @@ const SetWalkScreen = () => {
             inputContainerStyle={{ borderBottomColor: colors.secondary }}
           />
         </View>
-        <Button title="Set & Start" buttonStyle={styles.button} />
+        <StyledButton
+          title="Set & Start"
+          onPress={() => console.log("hello")}
+        />
       </View>
     </ScrollView>
   );
@@ -64,12 +68,7 @@ const styles = StyleSheet.create({
     width: width * 0.95,
     height: height * 0.4,
   },
-  button: {
-    width: width * 0.35,
-    height: height * 0.06,
-    backgroundColor: colors.primary,
-    borderRadius: (height * 0.06) / 2,
-  },
+
   input: {
     flexDirection: "row",
     justifyContent: "center",
