@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Dimensions,
+  Pressable,
   StyleSheet,
+  Text,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -12,6 +14,7 @@ import { Dialog, Input } from "react-native-elements";
 import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import { useNavigation } from "@react-navigation/native";
 // import Dialog from "react-native-dialog";
 const { width, height } = Dimensions.get("window");
 function MapScreen(props: any) {
@@ -22,7 +25,7 @@ function MapScreen(props: any) {
   const ASPECT_RATIO = width / height;
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
+  const navigation = useNavigation();
   useEffect(() => {
     setIsLoading(true);
     (async () => {
@@ -81,6 +84,23 @@ function MapScreen(props: any) {
           </View>
         </View>
       </Dialog>
+      <Pressable
+        onPress={() => navigation.goBack()}
+        style={{
+          width: 45,
+          height: 45,
+          backgroundColor: "lightgrey",
+          alignItems: "center",
+          justifyContent: "center",
+          borderRadius: 25,
+          zIndex: 100,
+          position: "absolute",
+          top: 10,
+          left: 15,
+        }}
+      >
+        <Text style={{ fontSize: 14 }}>👈🏻</Text>
+      </Pressable>
       {curLocation && (
         <MapView
           initialRegion={{
@@ -116,7 +136,12 @@ function MapScreen(props: any) {
         >
           <StyledCard title="Specified steps" rest="234" />
         </TouchableOpacity>
-        <StyledCard title="Walked steps" rest="223234" />
+        <Pressable
+          onPress={() => navigation.navigate("message")}
+          style={{ width: "100%" }}
+        >
+          <StyledCard title="Walked steps" rest="223234" />
+        </Pressable>
         <StyledCard title="Walked distance" rest="2343m" />
       </View>
     </View>
@@ -125,10 +150,11 @@ function MapScreen(props: any) {
 
 const styles = StyleSheet.create({
   map: {
-    height: height * 0.56,
+    height: height * 0.62,
     width: width,
   },
   bottomContainer: {
+    backgroundColor: "white",
     width: width,
     alignItems: "center",
     padding: 10,

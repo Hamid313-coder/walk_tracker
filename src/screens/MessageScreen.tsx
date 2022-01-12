@@ -1,9 +1,28 @@
-import React from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React, { useEffect } from "react";
+import {
+  BackHandler,
+  Dimensions,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
+import { useDoubleBackPressExit } from "../helpers/DoublePressToExit";
 const { width, height } = Dimensions.get("screen");
 const MessageScreen = () => {
+  const navigation = useNavigation();
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      () => {
+        navigation.navigate("SetWalk");
+        return true;
+      }
+    );
+  }, []);
   return (
     <View style={styles.container}>
       <Text style={{ color: colors.primary, fontSize: width > 356 ? 28 : 23 }}>
@@ -24,7 +43,10 @@ const MessageScreen = () => {
       >
         You took all the steps you specified.
       </Text>
-      <StyledButton title="Walk again" onPress={() => console.log("hello")} />
+      <StyledButton
+        title="Walk again"
+        onPress={() => navigation.navigate("SetWalk")}
+      />
     </View>
   );
 };
@@ -34,6 +56,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
   },
 });
 

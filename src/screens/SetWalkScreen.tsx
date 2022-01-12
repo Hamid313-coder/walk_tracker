@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import {
   Dimensions,
@@ -14,6 +15,7 @@ import colors from "../constants/colors";
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 const SetWalkScreen = () => {
+  const navigation = useNavigation();
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -51,7 +53,7 @@ const SetWalkScreen = () => {
         </View>
         <StyledButton
           title="Set & Start"
-          onPress={() => console.log("hello")}
+          onPress={() => navigation.navigate({ name: "Map" })}
         />
       </View>
     </ScrollView>
@@ -60,6 +62,7 @@ const SetWalkScreen = () => {
 
 const styles = StyleSheet.create({
   scrollContainer: {
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
     flexGrow: 1,
