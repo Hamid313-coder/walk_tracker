@@ -2686,6 +2686,14 @@ expo-modules-core@0.6.3:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
+expo-sensors@~11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/expo-sensors/-/expo-sensors-11.1.0.tgz#b28abd6a7010d0d1ae22aced0ae4975ef51acdc5"
+  integrity sha512-yi6IUDREhCyMxg4rmrePPAGg56EpFmxniD86SIANUCV6kHwjv8PwQ/I6ixH1zxsekSN5e60oufrYZXRO8kkCng==
+  dependencies:
+    "@expo/config-plugins" "^4.0.2"
+    invariant "^2.2.4"
+
 expo-status-bar@~1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.2.0.tgz"

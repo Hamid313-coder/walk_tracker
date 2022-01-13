@@ -8,6 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
+
 import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
 import { useDoubleBackPressExit } from "../helpers/DoublePressToExit";
