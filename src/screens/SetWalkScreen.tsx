@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import {
   Dimensions,
   Image,
@@ -8,7 +8,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { Button, Input } from "react-native-elements";
+import { Input } from "react-native-elements";
 import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
 
@@ -16,6 +16,8 @@ const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 const SetWalkScreen = () => {
   const navigation = useNavigation();
+  const [number, setNumber] = useState("");
+  const [error, setError] = useState("");
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
@@ -39,6 +41,7 @@ const SetWalkScreen = () => {
           </Text>
           <Input
             keyboardType="numeric"
+            onChangeText={(text) => setNumber(text)}
             inputStyle={{
               color: colors.secondary,
               textAlign: "center",
@@ -53,7 +56,18 @@ const SetWalkScreen = () => {
         </View>
         <StyledButton
           title="Set & Start"
-          onPress={() => navigation.navigate({ name: "Map" })}
+          onPress={() => {
+            const num = Number(number);
+            if (!isNaN(num) && num > 0) {
+              setError("");
+            } else {
+              setError(
+                isNaN(num)
+                  ? "Please enter a number!"
+                  : "Please enter a valid number!"
+              );
+            }
+          }}
         />
       </View>
     </ScrollView>
