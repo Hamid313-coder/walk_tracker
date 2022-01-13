@@ -9,12 +9,15 @@ import {
   View,
 } from "react-native";
 import { Input } from "react-native-elements";
+import { useDispatch } from "react-redux";
 import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
+import { setSpecifiedSteps } from "../store/actions/StepActions";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
 const SetWalkScreen = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   const [number, setNumber] = useState("");
   const [error, setError] = useState("");
@@ -36,33 +39,50 @@ const SetWalkScreen = () => {
         </Text>
 
         <View style={styles.input}>
-          <Text style={{ color: colors.secondary, fontSize: 15 }}>
-            Number of steps:{" "}
-          </Text>
-          <Input
-            keyboardType="numeric"
-            onChangeText={(text) => setNumber(text)}
-            inputStyle={{
-              color: colors.secondary,
-              textAlign: "center",
-              fontSize: 16,
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              flexWrap: "wrap",
             }}
-            containerStyle={{
-              borderColor: colors.secondary,
-              width: width * 0.17,
-            }}
-            inputContainerStyle={{ borderBottomColor: colors.secondary }}
-          />
+          >
+            <Text style={{ color: colors.secondary, fontSize: 15 }}>
+              Number of steps:{" "}
+            </Text>
+            <Input
+              keyboardType="numeric"
+              onFocus={() => setError("")}
+              onChangeText={(text) => {
+                setNumber(text);
+              }}
+              inputStyle={{
+                color: colors.secondary,
+                textAlign: "center",
+                fontSize: 16,
+              }}
+              containerStyle={{
+                borderColor: colors.secondary,
+                width: width * 0.17,
+              }}
+              inputContainerStyle={{ borderBottomColor: colors.secondary }}
+            />
+          </View>
+          {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
         </View>
+
         <StyledButton
           title="Set & Start"
           onPress={() => {
             const num = Number(number);
+
+            //validation for input.
             if (!isNaN(num) && num > 0) {
+              dispatch(setSpecifiedSteps(num));
               setError("");
+              navigation.navigate("Map");
             } else {
               setError(
-                isNaN(num)
+                isNaN(num) || !number
                   ? "Please enter a number!"
                   : "Please enter a valid number!"
               );
@@ -87,7 +107,6 @@ const styles = StyleSheet.create({
   },
 
   input: {
-    flexDirection: "row",
     justifyContent: "center",
     marginVertical: 10,
     alignItems: "center",

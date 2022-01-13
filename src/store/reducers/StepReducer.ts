@@ -4,13 +4,15 @@ const initialState = {
   specifiedSteps: null,
   walkedSteps: null,
   traveledDistance: null,
-  routCoords: [],
+  routCoords: null,
 };
 
 const StepReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case SET_SPECIFIED_STEPS:
       return { ...state, specifiedSteps: action.stepsNumber };
+    default:
+      return state;
   }
 };
 

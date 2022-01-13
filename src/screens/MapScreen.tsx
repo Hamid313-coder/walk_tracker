@@ -15,12 +15,14 @@ import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
 // import Dialog from "react-native-dialog";
 const { width, height } = Dimensions.get("window");
 function MapScreen(props: any) {
   const [curLocation, setCurLocation] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const spNumber = useSelector((state) => state.step.specifiedSteps);
 
   const ASPECT_RATIO = width / height;
   const LATITUDE_DELTA = 0.922;
@@ -60,7 +62,7 @@ function MapScreen(props: any) {
     >
       <Dialog onBackdropPress={() => setIsVisible(false)} isVisible={isVisible}>
         <Dialog.Title
-          title="Are you sure to change the number of steps?"
+          title={`Are you sure to change the number of steps? Your specified number is ${spNumber}`}
           titleStyle={{ color: colors.primary }}
         />
         <Input keyboardType="numeric" textAlign="center" />
