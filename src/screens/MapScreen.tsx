@@ -51,10 +51,10 @@ function MapScreen(props: any) {
 
   useEffect(() => {
     (async () => {
-      // RNSensorStep.requestSensorPermission();
-      // const granted = await RNSensorStep.checkSensorPermission();
-      // console.log(granted);
-      // if (!granted) return;
+      RNSensorStep.requestSensorPermission();
+      const granted = await RNSensorStep.checkSensorPermission();
+      console.log(granted);
+      if (!granted) return;
       RNSensorStep.start(1000, SensorType.COUNTER);
       DeviceEventEmitter.addListener("StepCounter", async (data) => {
         setSteps(data.steps);
