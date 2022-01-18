@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  DeviceEventEmitter,
   Dimensions,
   Pressable,
   StyleSheet,
@@ -10,79 +11,79 @@ import {
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-
 import { Dialog, Input } from "react-native-elements";
 import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-import { Pedometer } from "expo-sensors";
+import { startCounter, stopCounter } from "react-native-accurate-step-counter";
 // import Dialog from "react-native-dialog";
 const { width, height } = Dimensions.get("window");
-function MapScreen(props: any) {
-  const [curLocation, setCurLocation] = useState<any>(null);
+function MapScreen(props) {
+  const [curLocation, setCurLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [currentSteps, setCurrentSteps] = useState(0);
+  const [steps, setSteps] = useState(0);
   const spNumber = useSelector((state) => state.step.specifiedSteps);
-
+  let ste = 0;
   const ASPECT_RATIO = width / height;
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
   const navigation = useNavigation();
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   (async () => {
+  //     const { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       alert("Permission to access location denied!");
+  //       return;
+  //     }
+
+  //     const location = await Location.getCurrentPositionAsync({
+  //       accuracy: Location.LocationAccuracy.BestForNavigation,
+  //     });
+
+  //     setCurLocation(location);
+  //     setIsLoading(false);
+  //   })();
+  // }, []);
+
   useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        alert("Permission to access location denied!");
-        return;
-      }
+    const config = {
+      default_threshold: 15.0,
+      default_delay: 150000000,
+      cheatInterval: 3000,
+      onStepCountChange: (stepCount) => {
+        console.log(steps);
+        setSteps(stepCount);
+      },
+      onCheat: () => {
+        console.log("User is Cheating");
+      },
+    };
+    startCounter(config);
 
-      const location = await Location.getCurrentPositionAsync({
-        accuracy: Location.LocationAccuracy.BestForNavigation,
-      });
-
-      setCurLocation(location);
-      setIsLoading(false);
-    })();
+    return () => {
+      stopCounter();
+    };
   }, []);
 
   useEffect(() => {
-    let subscription;
-    (async () => {
-      try {
-        const permission = await Pedometer.getPermissionsAsync();
-        const isAvailable = await Pedometer.isAvailableAsync();
-        console.log(permission);
+    if (steps === spNumber) {
+      console.log("helllooowowo");
+      navigation.navigate("message");
+    }
+  }, [steps]);
 
-        // if (!isAvailable) alert("please enable your pedometer on you device");
-        // if (isAvailable) {
-        console.log(isAvailable);
-      } catch (error) {
-        alert(error);
-      }
-      // subscription = Pedometer.watchStepCount((result) => {
-      //   console.log(result.steps);
-      //   setCurrentSteps(result.steps);
-      // });
-      // }
-      const end = new Date();
-      const start = new Date();
-      start.setDate(end.getDate() - 1);
-      const steps = await Pedometer.getStepCountAsync(start, end);
-      console.log(steps.steps);
-    })();
-    // return subscription;
-  }, []);
+  console.log(steps);
 
-  if (isLoading) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <View style={styles.center}>
+  //       <ActivityIndicator size="large" color={colors.primary} />
+  //     </View>
+  //   );
+  // }
   return (
     <View
       style={{
@@ -133,7 +134,7 @@ function MapScreen(props: any) {
       >
         <Text style={{ fontSize: 14 }}>👈🏻</Text>
       </Pressable>
-      {curLocation && (
+      {/* {curLocation && (
         <MapView
           initialRegion={{
             latitude: curLocation?.coords?.latitude,
@@ -160,7 +161,7 @@ function MapScreen(props: any) {
             />
           )}
         </MapView>
-      )}
+      )} */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity
           onPress={() => setIsVisible(true)}
@@ -172,7 +173,7 @@ function MapScreen(props: any) {
           onPress={() => navigation.navigate("message")}
           style={{ width: "100%" }}
         >
-          <StyledCard title="Walked steps" rest={currentSteps.toString()} />
+          <StyledCard title="Walked steps" rest={steps} />
         </Pressable>
         <StyledCard title="Walked distance" rest="2343m" />
       </View>
