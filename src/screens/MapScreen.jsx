@@ -19,13 +19,13 @@ import { useSelector } from "react-redux";
 import { startCounter, stopCounter } from "react-native-accurate-step-counter";
 // import Dialog from "react-native-dialog";
 const { width, height } = Dimensions.get("window");
-function MapScreen(props: any) {
-  const [curLocation, setCurLocation] = useState<any>(null);
+function MapScreen(props) {
+  const [curLocation, setCurLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [steps, setSteps] = useState(0);
   const spNumber = useSelector((state) => state.step.specifiedSteps);
-
+  let ste = 0;
   const ASPECT_RATIO = width / height;
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
