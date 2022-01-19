@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
+  DeviceEventEmitter,
   Dimensions,
   Pressable,
   StyleSheet,
@@ -10,20 +11,20 @@ import {
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-
+import RNSensorStep, { SensorType } from "react-native-sensor-step";
 import { Dialog, Input } from "react-native-elements";
 import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-import { Pedometer } from "expo-sensors";
+
 // import Dialog from "react-native-dialog";
 const { width, height } = Dimensions.get("window");
 function MapScreen(props: any) {
   const [curLocation, setCurLocation] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [currentSteps, setCurrentSteps] = useState(0);
+  const [steps, setSteps] = useState(0);
   const spNumber = useSelector((state) => state.step.specifiedSteps);
 
   const ASPECT_RATIO = width / height;
@@ -49,31 +50,19 @@ function MapScreen(props: any) {
   }, []);
 
   useEffect(() => {
-    let subscription;
     (async () => {
-      try {
-        const permission = await Pedometer.getPermissionsAsync();
-        const isAvailable = await Pedometer.isAvailableAsync();
-        console.log(permission);
-
-        // if (!isAvailable) alert("please enable your pedometer on you device");
-        // if (isAvailable) {
-        console.log(isAvailable);
-      } catch (error) {
-        alert(error);
-      }
-      // subscription = Pedometer.watchStepCount((result) => {
-      //   console.log(result.steps);
-      //   setCurrentSteps(result.steps);
-      // });
-      // }
-      const end = new Date();
-      const start = new Date();
-      start.setDate(end.getDate() - 1);
-      const steps = await Pedometer.getStepCountAsync(start, end);
-      console.log(steps.steps);
+      // RNSensorStep.requestSensorPermission();
+      // const granted = await RNSensorStep.checkSensorPermission();
+      // console.log(granted);
+      // if (!granted) return;
+      RNSensorStep.start(1000, SensorType.COUNTER);
+      DeviceEventEmitter.addListener("StepCounter", async (data) => {
+        setSteps(data.steps);
+      });
     })();
-    // return subscription;
+    return () => {
+      RNSensorStep.stop();
+    };
   }, []);
 
   if (isLoading) {
@@ -172,7 +161,7 @@ function MapScreen(props: any) {
           onPress={() => navigation.navigate("message")}
           style={{ width: "100%" }}
         >
-          <StyledCard title="Walked steps" rest={currentSteps.toString()} />
+          <StyledCard title="Walked steps" rest={steps} />
         </Pressable>
         <StyledCard title="Walked distance" rest="2343m" />
       </View>
