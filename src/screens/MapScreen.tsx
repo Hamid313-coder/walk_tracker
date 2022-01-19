@@ -11,13 +11,12 @@ import {
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import RNSensorStep, { SensorType } from "react-native-sensor-step";
 import { Dialog, Input } from "react-native-elements";
 import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
-
+import { startCounter, stopCounter } from "react-native-accurate-step-counter";
 // import Dialog from "react-native-dialog";
 const { width, height } = Dimensions.get("window");
 function MapScreen(props: any) {
@@ -31,47 +30,55 @@ function MapScreen(props: any) {
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
   const navigation = useNavigation();
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   (async () => {
+  //     const { status } = await Location.requestForegroundPermissionsAsync();
+  //     if (status !== "granted") {
+  //       alert("Permission to access location denied!");
+  //       return;
+  //     }
+
+  //     const location = await Location.getCurrentPositionAsync({
+  //       accuracy: Location.LocationAccuracy.BestForNavigation,
+  //     });
+
+  //     setCurLocation(location);
+  //     setIsLoading(false);
+  //   })();
+  // }, []);
+
   useEffect(() => {
-    setIsLoading(true);
-    (async () => {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        alert("Permission to access location denied!");
-        return;
-      }
-
-      const location = await Location.getCurrentPositionAsync({
-        accuracy: Location.LocationAccuracy.BestForNavigation,
-      });
-
-      setCurLocation(location);
-      setIsLoading(false);
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      // RNSensorStep.requestSensorPermission();
-      // const granted = await RNSensorStep.checkSensorPermission();
-      // console.log(granted);
-      // if (!granted) return;
-      RNSensorStep.start(1000, SensorType.COUNTER);
-      DeviceEventEmitter.addListener("StepCounter", async (data) => {
-        setSteps(data.steps);
-      });
-    })();
+    const config = {
+      default_threshold: 15.0,
+      default_delay: 150000000,
+      cheatInterval: 3000,
+      onStepCountChange: (stepCount) => {
+        setSteps(stepCount);
+      },
+      onCheat: () => {
+        console.log("User is Cheating");
+      },
+    };
+    startCounter(config);
     return () => {
-      RNSensorStep.stop();
+      stopCounter();
     };
   }, []);
 
-  if (isLoading) {
-    return (
-      <View style={styles.center}>
-        <ActivityIndicator size="large" color={colors.primary} />
-      </View>
-    );
-  }
+  useEffect(() => {
+    if (steps === spNumber) {
+      navigation.navigate("message");
+    }
+  }, [steps]);
+
+  // if (isLoading) {
+  //   return (
+  //     <View style={styles.center}>
+  //       <ActivityIndicator size="large" color={colors.primary} />
+  //     </View>
+  //   );
+  // }
   return (
     <View
       style={{
@@ -122,7 +129,7 @@ function MapScreen(props: any) {
       >
         <Text style={{ fontSize: 14 }}>👈🏻</Text>
       </Pressable>
-      {curLocation && (
+      {/* {curLocation && (
         <MapView
           initialRegion={{
             latitude: curLocation?.coords?.latitude,
@@ -149,7 +156,7 @@ function MapScreen(props: any) {
             />
           )}
         </MapView>
-      )}
+      )} */}
       <View style={styles.bottomContainer}>
         <TouchableOpacity
           onPress={() => setIsVisible(true)}
