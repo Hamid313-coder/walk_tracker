@@ -231,10 +231,6 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> 743e5a491de4d5a8846b5c5fb12f5aba0138677b
 }
 
 // Run this once to be able to run the application with BUCK

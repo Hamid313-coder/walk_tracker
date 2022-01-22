@@ -17,9 +17,14 @@ import StyledCard from "../components/StyledCard";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { startCounter, stopCounter } from "react-native-accurate-step-counter";
+import MapboxGL from "@react-native-mapbox-gl/maps";
+import { Entypo } from "@expo/vector-icons";
 // import Dialog from "react-native-dialog";
 const { width, height } = Dimensions.get("window");
 function MapScreen(props) {
+  MapboxGL.setAccessToken(
+    "sk.eyJ1IjoiaGFtaWRodXNzYWlueSIsImEiOiJja3lwbmJucWIwYm8yMzJucGNxM2g5OTYzIn0.CsdiL49YksEl7193h1HQlg"
+  );
   const [curLocation, setCurLocation] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -30,23 +35,26 @@ function MapScreen(props) {
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
   const navigation = useNavigation();
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   (async () => {
-  //     const { status } = await Location.requestForegroundPermissionsAsync();
-  //     if (status !== "granted") {
-  //       alert("Permission to access location denied!");
-  //       return;
-  //     }
+  let arr;
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      const mapPer = await MapboxGL.requestAndroidLocationPermissions();
+      console.log(mapPer);
+      if (status !== "granted" && !mapPer) {
+        alert("Permission to access location denied!");
+        return;
+      }
 
-  //     const location = await Location.getCurrentPositionAsync({
-  //       accuracy: Location.LocationAccuracy.BestForNavigation,
-  //     });
-
-  //     setCurLocation(location);
-  //     setIsLoading(false);
-  //   })();
-  // }, []);
+      const location = await Location.getCurrentPositionAsync({
+        accuracy: Location.LocationAccuracy.BestForNavigation,
+      });
+      console.log(location);
+      setCurLocation(location);
+      setIsLoading(false);
+    })();
+  }, []);
 
   useEffect(() => {
     const config = {
@@ -72,13 +80,13 @@ function MapScreen(props) {
     }
   }, [steps]);
 
-  // if (isLoading) {
-  //   return (
-  //     <View style={styles.center}>
-  //       <ActivityIndicator size="large" color={colors.primary} />
-  //     </View>
-  //   );
-  // }
+  if (isLoading) {
+    return (
+      <View style={styles.center}>
+        <ActivityIndicator size="large" color={colors.primary} />
+      </View>
+    );
+  }
   return (
     <View
       style={{
@@ -129,34 +137,22 @@ function MapScreen(props) {
       >
         <Text style={{ fontSize: 14 }}>👈🏻</Text>
       </Pressable>
-      {/* {curLocation && (
-        <MapView
-          initialRegion={{
-            latitude: curLocation?.coords?.latitude,
-            longitude: curLocation?.coords?.longitude,
-            longitudeDelta: 0.005,
-            latitudeDelta: 0.005,
-          }}
-          showsBuildings
-          showsUserLocation
-          followsUserLocation
-          loadingEnabled
-          loadingIndicatorColor="orange"
-          provider={null}
-          style={styles.map}
-        >
-          {curLocation && (
-            <Marker
-              title="Me"
-              description="This is Me"
-              coordinate={{
-                latitude: curLocation.coords.latitude,
-                longitude: curLocation.coords.longitude,
-              }}
-            />
-          )}
-        </MapView>
-      )} */}
+      {curLocation && (
+        <MapboxGL.MapView style={styles.map}>
+          <MapboxGL.PointAnnotation
+            id="me"
+            title="This is me"
+            coordinate={[
+              curLocation.coords.longitude,
+              curLocation.coords.latitude,
+            ]}
+          >
+            <View>
+              <Entypo name="location-pin" size={24} color="red" />
+            </View>
+          </MapboxGL.PointAnnotation>
+        </MapboxGL.MapView>
+      )}
       <View style={styles.bottomContainer}>
         <TouchableOpacity
           onPress={() => setIsVisible(true)}
