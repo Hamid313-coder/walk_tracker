@@ -146,11 +146,14 @@ function MapScreen(props) {
               curLocation.coords.longitude,
               curLocation.coords.latitude,
             ]}
-          >
-            <View>
-              <Entypo name="location-pin" size={24} color="red" />
-            </View>
-          </MapboxGL.PointAnnotation>
+          ></MapboxGL.PointAnnotation>
+          <MapboxGL.Camera
+            zoomLevel={16}
+            centerCoordinate={[
+              curLocation.coords.longitude,
+              curLocation.coords.latitude,
+            ]}
+          ></MapboxGL.Camera>
         </MapboxGL.MapView>
       )}
       <View style={styles.bottomContainer}>
