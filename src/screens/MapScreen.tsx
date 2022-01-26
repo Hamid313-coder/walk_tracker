@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   DeviceEventEmitter,
@@ -18,30 +18,40 @@ import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { startCounter, stopCounter } from "react-native-accurate-step-counter";
 import MapboxGL from "@react-native-mapbox-gl/maps";
-import { Entypo } from "@expo/vector-icons";
+import {
+  Feature,
+  LineString,
+  lineString,
+  Position,
+  Properties,
+} from "@turf/helpers";
+import { LocationObject } from "expo-location";
 // import Dialog from "react-native-dialog";
 const { width, height } = Dimensions.get("window");
-function MapScreen(props) {
+function MapScreen(props: any) {
   MapboxGL.setAccessToken(
     "sk.eyJ1IjoiaGFtaWRodXNzYWlueSIsImEiOiJja3lwbmJucWIwYm8yMzJucGNxM2g5OTYzIn0.CsdiL49YksEl7193h1HQlg"
   );
-  const [curLocation, setCurLocation] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const [steps, setSteps] = useState(0);
+  const [curLocation, setCurLocation] = useState<LocationObject>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [route, setRoute] = useState();
+  const [steps, setSteps] = useState<number>(0);
   const spNumber = useSelector((state) => state.step.specifiedSteps);
-  let ste = 0;
+  const [coords, setCoords] = useState([]);
+
+  ////////////////
   const ASPECT_RATIO = width / height;
   const LATITUDE_DELTA = 0.922;
   const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
   const navigation = useNavigation();
-  let arr;
+
   useEffect(() => {
     setIsLoading(true);
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
       const mapPer = await MapboxGL.requestAndroidLocationPermissions();
-      console.log(mapPer);
+
       if (status !== "granted" && !mapPer) {
         alert("Permission to access location denied!");
         return;
@@ -50,18 +60,25 @@ function MapScreen(props) {
       const location = await Location.getCurrentPositionAsync({
         accuracy: Location.LocationAccuracy.BestForNavigation,
       });
-      console.log(location);
+      coords.push([location.coords.longitude, location.coords.latitude]);
       setCurLocation(location);
       setIsLoading(false);
     })();
   }, []);
 
   useEffect(() => {
+    if (coords.length > 1) {
+      const newRoute = lineString(coords);
+      setRoute(newRoute);
+    }
+  }, [coords]);
+
+  useEffect(() => {
     const config = {
       default_threshold: 15.0,
       default_delay: 150000000,
       cheatInterval: 3000,
-      onStepCountChange: (stepCount) => {
+      onStepCountChange: (stepCount: any) => {
         setSteps(stepCount);
       },
       onCheat: () => {
@@ -138,17 +155,38 @@ function MapScreen(props) {
         <Text style={{ fontSize: 14 }}>👈🏻</Text>
       </Pressable>
       {curLocation && (
-        <MapboxGL.MapView style={styles.map}>
-          <MapboxGL.PointAnnotation
-            id="me"
-            title="This is me"
-            coordinate={[
-              curLocation.coords.longitude,
-              curLocation.coords.latitude,
-            ]}
-          ></MapboxGL.PointAnnotation>
+        <MapboxGL.MapView
+          style={styles.map}
+          styleURL={MapboxGL.StyleURL.Outdoors}
+        >
+          {route && (
+            <MapboxGL.ShapeSource shape={route} id="lineShape">
+              <MapboxGL.LineLayer
+                id="lineId"
+                style={{
+                  lineWidth: 5,
+                  lineJoin: "miter",
+                  lineColor: colors.secondary,
+                }}
+              />
+            </MapboxGL.ShapeSource>
+          )}
+          <MapboxGL.UserLocation
+            minDisplacement={5}
+            androidRenderMode="compass"
+            visible
+            onUpdate={(uLocation) => {
+              coords.push([
+                uLocation.coords.longitude,
+                uLocation.coords.latitude,
+              ]);
+              setCoords([...coords]);
+            }}
+          />
+
           <MapboxGL.Camera
-            zoomLevel={16}
+            followUserLocation
+            zoomLevel={17}
             centerCoordinate={[
               curLocation.coords.longitude,
               curLocation.coords.latitude,
@@ -161,14 +199,10 @@ function MapScreen(props) {
           onPress={() => setIsVisible(true)}
           style={styles.touch}
         >
-          <StyledCard title="Specified steps" rest="234" />
+          <StyledCard title="Specified steps" rest={spNumber} />
         </TouchableOpacity>
-        <Pressable
-          onPress={() => navigation.navigate("message")}
-          style={{ width: "100%" }}
-        >
-          <StyledCard title="Walked steps" rest={steps} />
-        </Pressable>
+
+        <StyledCard title="Walked steps" rest={steps} />
         <StyledCard title="Walked distance" rest="2343m" />
       </View>
     </View>

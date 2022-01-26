@@ -13,6 +13,7 @@
     "@react-native-mapbox-gl/maps": "^8.5.0",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@turf/helpers": "^6.5.0",
     "expo": "~44.0.0",
     "expo-location": "~14.0.1",
     "expo-splash-screen": "~0.14.1",
