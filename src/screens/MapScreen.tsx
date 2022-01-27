@@ -165,7 +165,7 @@ function MapScreen(props: any) {
                 id="lineId"
                 style={{
                   lineWidth: 5,
-                  lineJoin: "miter",
+                  lineJoin: "bevel",
                   lineColor: colors.secondary,
                 }}
               />

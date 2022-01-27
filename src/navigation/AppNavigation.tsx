@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
+import CustomScreen from "../screens/CustomScreen";
 import MapScreen from "../screens/MapScreen";
 import MessageScreen from "../screens/MessageScreen";
 import SetWalkScreen from "../screens/SetWalkScreen";
@@ -9,19 +10,24 @@ function AppNavigation(props: any) {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="SetWalk"
+        initialRouteName="custom"
         defaultScreenOptions={{
           headerShown: false,
-          statusBarStyle: "auto",
+          statusBarStyle: "dark",
         }}
       >
         <Stack.Screen
-          name="SetWalk"
+          name="custom"
+          component={CustomScreen}
+          options={{ headerShown: false, statusBarStyle: "dark" }}
+        />
+        <Stack.Screen
+          name="setWalk"
           component={SetWalkScreen}
           options={{ headerShown: false, statusBarStyle: "dark" }}
         />
         <Stack.Screen
-          name="Map"
+          name="map"
           component={MapScreen}
           options={{
             headerShown: false,
