@@ -1,4 +1,5 @@
 import { Fontisto, MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
 import { CheckBox, Input } from "react-native-elements";
@@ -8,6 +9,7 @@ import colors from "../constants/colors";
 const { width, height } = Dimensions.get("screen");
 function CustomScreen() {
   const [isMale, setIsMale] = useState(true);
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Text
@@ -36,18 +38,17 @@ function CustomScreen() {
       <View
         style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}
       >
-        <Text style={styles.text}>Height: </Text>
+        <Text style={styles.text}>Height:</Text>
         <Input
           inputContainerStyle={{
             justifyContent: "center",
             alignSelf: "center",
-            height: 30,
-            width: 70,
+            height: height * 0.035,
+            width: width * 0.18,
           }}
           containerStyle={{
-            height: 50,
-            width: 80,
-
+            height: height * 0.06,
+            width: width * 0.195,
             justifyContent: "center",
           }}
           keyboardType="numeric"
@@ -57,7 +58,10 @@ function CustomScreen() {
         />
         <Text style={styles.text}>cm</Text>
       </View>
-      <StyledButton title="Next" />
+      <StyledButton
+        title="Next"
+        onPress={() => navigation.navigate("setWalk")}
+      />
     </View>
   );
 }
@@ -72,7 +76,7 @@ const styles = StyleSheet.create({
   image: {
     width: width * 0.95,
     height: height * 0.4,
-    marginTop: 20,
+    marginTop: height * 0.02,
   },
   text: { fontSize: 18, color: colors.secondary, fontWeight: "bold" },
 });
