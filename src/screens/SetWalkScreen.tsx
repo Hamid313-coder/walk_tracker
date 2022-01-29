@@ -79,7 +79,7 @@ const SetWalkScreen = () => {
             if (!isNaN(num) && num > 0) {
               dispatch(setSpecifiedSteps(num));
               setError("");
-              navigation.navigate("Map");
+              navigation.navigate("map");
             } else {
               setError(
                 isNaN(num) || !number

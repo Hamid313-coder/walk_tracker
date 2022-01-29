@@ -8,7 +8,9 @@ import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
 const { width, height } = Dimensions.get("screen");
 function CustomScreen() {
-  const [isMale, setIsMale] = useState(true);
+  const [isMale, setIsMale] = useState<boolean>(true);
+  const [userHeight, setUserHeight] = useState<String>();
+  const [error, setError] = useState<String>("");
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -35,9 +37,7 @@ function CustomScreen() {
           onPress={() => setIsMale(false)}
         />
       </View>
-      <View
-        style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}
-      >
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Text style={styles.text}>Height:</Text>
         <Input
           inputContainerStyle={{
@@ -55,9 +55,16 @@ function CustomScreen() {
           textAlign="center"
           inputStyle={styles.text}
           renderErrorMessage={false}
+          onFocus={() => setError("")}
+          onChangeText={(text) => setUserHeight(text)}
         />
         <Text style={styles.text}>cm</Text>
       </View>
+      {true && (
+        <Text style={{ color: "red", marginVertical: 10 }}>
+          {error}this is the error
+        </Text>
+      )}
       <StyledButton
         title="Next"
         onPress={() => navigation.navigate("setWalk")}
