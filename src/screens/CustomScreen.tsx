@@ -1,9 +1,9 @@
-import { Fontisto, MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
-import { CheckBox, Input } from "react-native-elements";
+import { Input } from "react-native-elements";
 import { ScrollView } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
 import RadioButton from "../components/RadioButton";
 import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
@@ -13,6 +13,7 @@ function CustomScreen() {
   const [userHeight, setUserHeight] = useState<String>();
   const [error, setError] = useState<String>("");
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -88,7 +89,7 @@ function CustomScreen() {
 
             //validation for input.
             if (isFinite(num) && num > 0) {
-              // dispatch(setSpecifiedSteps(num));
+              dispatch();
               setError("");
               navigation.navigate("setWalk");
             } else {
