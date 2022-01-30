@@ -52,9 +52,7 @@ const SetWalkScreen = () => {
             <Input
               keyboardType="numeric"
               onFocus={() => setError("")}
-              onChangeText={(text) => {
-                setNumber(text);
-              }}
+              onChangeText={(text) => setNumber(Number(text).toFixed(0))}
               inputStyle={{
                 color: colors.secondary,
                 textAlign: "center",
@@ -76,15 +74,15 @@ const SetWalkScreen = () => {
             const num = Number(number);
 
             //validation for input.
-            if (!isNaN(num) && num > 0) {
+            if (isFinite(num) && num > 0) {
               dispatch(setSpecifiedSteps(num));
               setError("");
               navigation.navigate("map");
             } else {
               setError(
-                isNaN(num) || !number
-                  ? "Please enter a number!"
-                  : "Please enter a valid number!"
+                num <= 0
+                  ? "Please enter a valid number!"
+                  : "Please enter a number!"
               );
             }
           }}
