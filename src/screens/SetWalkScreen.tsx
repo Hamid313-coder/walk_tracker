@@ -25,7 +25,11 @@ const SetWalkScreen = () => {
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
         <Text
-          style={{ color: colors.primary, fontSize: width > 356 ? 28 : 23 }}
+          style={{
+            color: colors.primary,
+            fontSize: width > 356 ? 28 : 23,
+            fontWeight: "bold",
+          }}
         >
           Let's have some walking!
         </Text>
@@ -43,10 +47,15 @@ const SetWalkScreen = () => {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              flexWrap: "wrap",
             }}
           >
-            <Text style={{ color: colors.secondary, fontSize: 15 }}>
+            <Text
+              style={{
+                color: colors.secondary,
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
               Number of steps:{" "}
             </Text>
             <Input
@@ -56,13 +65,21 @@ const SetWalkScreen = () => {
               inputStyle={{
                 color: colors.secondary,
                 textAlign: "center",
-                fontSize: 16,
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+              inputContainerStyle={{
+                position: "absolute",
+                height: height * 0.035,
+                width: width * 0.195,
               }}
               containerStyle={{
-                borderColor: colors.secondary,
-                width: width * 0.17,
+                flexDirection: "column",
+                height: height * 0.06,
+                width: width * 0.198,
+                justifyContent: "center",
+                alignItems: "center",
               }}
-              inputContainerStyle={{ borderBottomColor: colors.secondary }}
             />
           </View>
           {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
@@ -111,7 +128,8 @@ const styles = StyleSheet.create({
   },
   guide: {
     color: colors.secondary,
-    fontSize: 16,
+    fontSize: 18,
+    fontWeight: "bold",
     textAlign: "center",
     paddingHorizontal: 20,
   },

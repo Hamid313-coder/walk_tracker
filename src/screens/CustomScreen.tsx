@@ -50,6 +50,7 @@ function CustomScreen() {
           <Text style={styles.text}>Height:</Text>
           <Input
             inputContainerStyle={{
+              position: "absolute",
               justifyContent: "center",
               alignSelf: "center",
               height: height * 0.035,
