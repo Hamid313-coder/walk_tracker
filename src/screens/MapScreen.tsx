@@ -37,8 +37,14 @@ function MapScreen(props: any) {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [route, setRoute] = useState();
   const [steps, setSteps] = useState<number>(0);
-  const spNumber = useSelector((state) => state.step.specifiedSteps);
   const [coords, setCoords] = useState([]);
+  const [distance, setDistance] = useState<number>();
+  const [unit, setUnit] = useState("cm");
+  const spNumber = useSelector((state) => state.step.specifiedSteps);
+  const userGender = useSelector((state) => state.userInfo.gender);
+  const userHeight = useSelector((state) => state.userInfo.height);
+  const STEP_LENGTH =
+    (userHeight * (userGender === "male" ? 0.415 : 0.413)) / 2;
 
   ////////////////
   const ASPECT_RATIO = width / height;
@@ -79,6 +85,16 @@ function MapScreen(props: any) {
       default_delay: 150000000,
       cheatInterval: 3000,
       onStepCountChange: (stepCount: any) => {
+        const dist = stepCount * STEP_LENGTH;
+        if (dist >= 100 && dist < 100000) {
+          setDistance(dist / 100);
+          setUnit("m");
+        } else if (dist >= 100000) {
+          setDistance(dist / 100000);
+          setUnit("km");
+        } else {
+          setDistance(dist);
+        }
         setSteps(stepCount);
       },
       onCheat: () => {
@@ -96,6 +112,13 @@ function MapScreen(props: any) {
       navigation.navigate("message");
     }
   }, [steps]);
+
+  // useEffect(() => {
+  //   console.log(distance);
+  //   if (distance > 100) {
+  //     setUnit("m");
+  //   }
+  // }, [distance]);
 
   if (isLoading) {
     return (
@@ -203,7 +226,10 @@ function MapScreen(props: any) {
         </TouchableOpacity>
 
         <StyledCard title="Walked steps" rest={steps} />
-        <StyledCard title="Walked distance" rest="2343m" />
+        <StyledCard
+          title="Walked distance"
+          rest={distance?.toFixed(2) + " " + unit}
+        />
       </View>
     </View>
   );

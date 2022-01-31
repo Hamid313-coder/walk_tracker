@@ -7,10 +7,12 @@ import MapScreen from "./src/screens/MapScreen";
 import MessageScreen from "./src/screens/MessageScreen";
 import SetWalkScreen from "./src/screens/SetWalkScreen";
 import StepReducer from "./src/store/reducers/StepReducer";
+import UserInfoReducer from "./src/store/reducers/UserInfoReducer";
 
 export default function App() {
   const reducers = combineReducers({
     step: StepReducer,
+    userInfo: UserInfoReducer,
   });
   const store = createStore(reducers);
   return (

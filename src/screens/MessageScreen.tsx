@@ -19,7 +19,7 @@ const MessageScreen = () => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       () => {
-        navigation.navigate("SetWalk");
+        navigation.navigate("setWalk");
         return true;
       }
     );

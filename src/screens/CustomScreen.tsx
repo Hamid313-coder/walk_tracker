@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import RadioButton from "../components/RadioButton";
 import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
+import { setUserInfo } from "../store/actions/UserInfoActions";
 const { width, height } = Dimensions.get("screen");
 function CustomScreen() {
   const [isMale, setIsMale] = useState<boolean>(true);
@@ -85,11 +86,9 @@ function CustomScreen() {
           title="Next"
           onPress={() => {
             const num = Number(userHeight);
-            console.log(num);
-
             //validation for input.
             if (isFinite(num) && num > 0) {
-              dispatch();
+              dispatch(setUserInfo(isMale ? "male" : "female", num));
               setError("");
               navigation.navigate("setWalk");
             } else {
