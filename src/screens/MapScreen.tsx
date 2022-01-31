@@ -1,7 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  DeviceEventEmitter,
   Dimensions,
   Pressable,
   StyleSheet,
@@ -15,18 +14,13 @@ import { Dialog, Input } from "react-native-elements";
 import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { startCounter, stopCounter } from "react-native-accurate-step-counter";
 import MapboxGL from "@react-native-mapbox-gl/maps";
-import {
-  Feature,
-  LineString,
-  lineString,
-  Position,
-  Properties,
-} from "@turf/helpers";
+import { lineString } from "@turf/helpers";
 import { LocationObject } from "expo-location";
-// import Dialog from "react-native-dialog";
+import { setWalkedDistance } from "../store/actions/StepActions";
+
 const { width, height } = Dimensions.get("window");
 function MapScreen(props: any) {
   MapboxGL.setAccessToken(
@@ -38,13 +32,14 @@ function MapScreen(props: any) {
   const [route, setRoute] = useState();
   const [steps, setSteps] = useState<number>(0);
   const [coords, setCoords] = useState([]);
-  const [distance, setDistance] = useState<number>();
+  const [distance, setDistance] = useState<number>(0);
   const [unit, setUnit] = useState("cm");
   const spNumber = useSelector((state) => state.step.specifiedSteps);
   const userGender = useSelector((state) => state.userInfo.gender);
   const userHeight = useSelector((state) => state.userInfo.height);
   const STEP_LENGTH =
     (userHeight * (userGender === "male" ? 0.415 : 0.413)) / 2;
+  const dispatch = useDispatch();
 
   ////////////////
   const ASPECT_RATIO = width / height;
@@ -109,16 +104,10 @@ function MapScreen(props: any) {
 
   useEffect(() => {
     if (steps === spNumber) {
+      dispatch(setWalkedDistance(distance, unit));
       navigation.navigate("message");
     }
   }, [steps]);
-
-  // useEffect(() => {
-  //   console.log(distance);
-  //   if (distance > 100) {
-  //     setUnit("m");
-  //   }
-  // }, [distance]);
 
   if (isLoading) {
     return (
@@ -228,7 +217,7 @@ function MapScreen(props: any) {
         <StyledCard title="Walked steps" rest={steps} />
         <StyledCard
           title="Walked distance"
-          rest={distance?.toFixed(2) + " " + unit}
+          rest={`${distance?.toFixed(1)} ${unit}`}
         />
       </View>
     </View>

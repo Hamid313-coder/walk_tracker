@@ -8,12 +8,16 @@ import {
   Text,
   View,
 } from "react-native";
+import { useSelector } from "react-redux";
 
 import StyledButton from "../components/StyledButton";
 import colors from "../constants/colors";
 import { useDoubleBackPressExit } from "../helpers/DoublePressToExit";
 const { width, height } = Dimensions.get("screen");
 const MessageScreen = () => {
+  const { specifiedSteps, walkedDistance, distanceMeasureUnit } = useSelector(
+    (state) => state.step
+  );
   const navigation = useNavigation();
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
@@ -44,6 +48,11 @@ const MessageScreen = () => {
       >
         You took all the steps you specified.
       </Text>
+      <Text>Specified steps: {specifiedSteps}</Text>
+      <Text>
+        Walked distance: {walkedDistance.toFixed(1)} {distanceMeasureUnit}
+      </Text>
+      <Text></Text>
       <StyledButton
         title="Walk again"
         onPress={() => navigation.navigate("SetWalk")}
