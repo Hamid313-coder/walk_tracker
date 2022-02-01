@@ -91,14 +91,14 @@ const SetWalkScreen = () => {
             const num = Number(number);
 
             //validation for input.
-            if (isFinite(num) && num > 0) {
+            if (isFinite(num) && num >= 500) {
               dispatch(setSpecifiedSteps(num));
               setError("");
               navigation.navigate("map");
             } else {
               setError(
-                num <= 0
-                  ? "Please enter a valid number!"
+                num < 500
+                  ? "Sorry! It must be at least 500."
                   : "Please enter a number!"
               );
             }

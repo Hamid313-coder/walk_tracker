@@ -5,12 +5,10 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
-import { Dialog, Input } from "react-native-elements";
 import colors from "../constants/colors";
 import StyledCard from "../components/StyledCard";
 import { useNavigation } from "@react-navigation/native";
@@ -22,13 +20,13 @@ import { LocationObject } from "expo-location";
 import { setWalkedDistance } from "../store/actions/StepActions";
 
 const { width, height } = Dimensions.get("window");
+
 function MapScreen(props: any) {
   MapboxGL.setAccessToken(
     "sk.eyJ1IjoiaGFtaWRodXNzYWlueSIsImEiOiJja3lwbmJucWIwYm8yMzJucGNxM2g5OTYzIn0.CsdiL49YksEl7193h1HQlg"
   );
   const [curLocation, setCurLocation] = useState<LocationObject>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isVisible, setIsVisible] = useState<boolean>(false);
   const [route, setRoute] = useState();
   const [steps, setSteps] = useState<number>(0);
   const [coords, setCoords] = useState([]);
@@ -40,11 +38,6 @@ function MapScreen(props: any) {
   const STEP_LENGTH =
     (userHeight * (userGender === "male" ? 0.415 : 0.413)) / 2;
   const dispatch = useDispatch();
-
-  ////////////////
-  const ASPECT_RATIO = width / height;
-  const LATITUDE_DELTA = 0.922;
-  const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -123,32 +116,6 @@ function MapScreen(props: any) {
         alignItems: "center",
       }}
     >
-      <Dialog onBackdropPress={() => setIsVisible(false)} isVisible={isVisible}>
-        <Dialog.Title
-          title={`Are you sure to change the number of steps? Your specified number is ${spNumber}`}
-          titleStyle={{ color: colors.primary }}
-        />
-        <Input keyboardType="numeric" textAlign="center" />
-        <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
-          <View style={{ overflow: "hidden", borderRadius: 3 }}>
-            <Dialog.Button
-              buttonStyle={{ backgroundColor: "transparent" }}
-              title="Okay"
-              titleStyle={{ color: colors.secondary }}
-              onPress={() => console.log("pressed okay!")}
-            />
-          </View>
-          <View style={{ overflow: "hidden", borderRadius: 3 }}>
-            <Dialog.Button
-              containerStyle={{ marginLeft: 15 }}
-              buttonStyle={{ backgroundColor: "transparent" }}
-              title="Cancel"
-              titleStyle={{ color: colors.secondary }}
-              onPress={() => setIsVisible(false)}
-            />
-          </View>
-        </View>
-      </Dialog>
       <Pressable
         onPress={() => navigation.goBack()}
         style={{
@@ -207,13 +174,7 @@ function MapScreen(props: any) {
         </MapboxGL.MapView>
       )}
       <View style={styles.bottomContainer}>
-        <TouchableOpacity
-          onPress={() => setIsVisible(true)}
-          style={styles.touch}
-        >
-          <StyledCard title="Specified steps" rest={spNumber} />
-        </TouchableOpacity>
-
+        <StyledCard title="Specified steps" rest={spNumber} />
         <StyledCard title="Walked steps" rest={steps} />
         <StyledCard
           title="Walked distance"

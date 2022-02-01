@@ -30,32 +30,58 @@ const MessageScreen = () => {
   }, []);
   return (
     <View style={styles.container}>
-      <Text style={{ color: colors.primary, fontSize: width > 356 ? 28 : 23 }}>
+      <Text
+        style={{
+          color: colors.primary,
+          fontWeight: "bold",
+          fontSize: width > 356 ? 28 : 23,
+        }}
+      >
         Congratulations!!!
       </Text>
 
       <Image
         source={require("../../assets/win.png")}
-        style={{ width: width * 0.95, height: height * 0.4 }}
+        style={{
+          width: width * 0.95,
+          height: height * 0.4,
+        }}
         resizeMode="contain"
       />
       <Text
         style={{
           fontSize: 18,
+          fontWeight: "bold",
           color: colors.secondary,
-          marginBottom: height * 0.08,
+          marginBottom: 10,
         }}
       >
-        You took all the steps you specified.
+        You took all the steps you specified!
       </Text>
-      <Text>Specified steps: {specifiedSteps}</Text>
-      <Text>
+      <Text
+        style={{
+          color: colors.secondary,
+          fontWeight: "bold",
+          fontSize: 18,
+          marginBottom: 10,
+        }}
+      >
+        Walked steps: {specifiedSteps}
+      </Text>
+      <Text
+        style={{
+          color: colors.secondary,
+          fontWeight: "bold",
+          fontSize: 18,
+          marginBottom: height * 0.04,
+        }}
+      >
         Walked distance: {walkedDistance.toFixed(1)} {distanceMeasureUnit}
       </Text>
-      <Text></Text>
+
       <StyledButton
         title="Walk again"
-        onPress={() => navigation.navigate("SetWalk")}
+        onPress={() => navigation.navigate("setWalk")}
       />
     </View>
   );
