@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   Dimensions,
@@ -8,31 +7,28 @@ import {
   Text,
   View,
 } from "react-native";
-import { Input } from "react-native-elements";
 import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { Input } from "react-native-elements";
+
 import StyledButton from "../components/StyledButton";
-import colors from "../constants/colors";
+import GeneralStyles from "../constants/GeneralStyles";
+
 import { setSpecifiedSteps } from "../store/actions/StepActions";
 
 const width = Dimensions.get("screen").width;
 const height = Dimensions.get("screen").height;
+
 const SetWalkScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [number, setNumber] = useState("");
   const [error, setError] = useState("");
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text
-          style={{
-            color: colors.primary,
-            fontSize: width > 356 ? 28 : 23,
-            fontWeight: "bold",
-          }}
-        >
-          Let's have some walking!
-        </Text>
+        <Text style={GeneralStyles.title}>Let's have some walking!</Text>
         <Image
           source={require("../../assets/wal.png")}
           style={styles.image}
@@ -49,24 +45,14 @@ const SetWalkScreen = () => {
               alignItems: "center",
             }}
           >
-            <Text
-              style={{
-                color: colors.secondary,
-                fontSize: 18,
-                fontWeight: "bold",
-              }}
-            >
-              Number of steps:{" "}
-            </Text>
+            <Text style={GeneralStyles.defaultText}>Number of steps: </Text>
             <Input
               keyboardType="numeric"
               onFocus={() => setError("")}
               onChangeText={(text) => setNumber(Number(text).toFixed(0))}
               inputStyle={{
-                color: colors.secondary,
+                ...GeneralStyles.defaultText,
                 textAlign: "center",
-                fontSize: 18,
-                fontWeight: "bold",
               }}
               inputContainerStyle={{
                 position: "absolute",
@@ -127,9 +113,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   guide: {
-    color: colors.secondary,
-    fontSize: 18,
-    fontWeight: "bold",
+    ...GeneralStyles.defaultText,
     textAlign: "center",
     paddingHorizontal: 20,
   },

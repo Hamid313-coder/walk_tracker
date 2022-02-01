@@ -7,17 +7,19 @@ import {
   Text,
   View,
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import * as Location from "expo-location";
-import colors from "../constants/colors";
-import StyledCard from "../components/StyledCard";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { startCounter, stopCounter } from "react-native-accurate-step-counter";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import { lineString } from "@turf/helpers";
+import * as Location from "expo-location";
 import { LocationObject } from "expo-location";
+
+import StyledCard from "../components/StyledCard";
+import colors from "../constants/colors";
+
 import { setWalkedDistance } from "../store/actions/StepActions";
+import GeneralStyles from "../constants/GeneralStyles";
 
 const { width, height } = Dimensions.get("window");
 
@@ -104,7 +106,7 @@ function MapScreen(props: any) {
 
   if (isLoading) {
     return (
-      <View style={styles.center}>
+      <View style={GeneralStyles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
@@ -198,12 +200,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     flex: 1,
   },
-  touch: {
-    width: "100%",
-    alignItems: "center",
-    height: height * 0.1,
-  },
-  center: { flex: 1, justifyContent: "center", alignItems: "center" },
 });
 
 export default MapScreen;

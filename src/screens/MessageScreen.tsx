@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import {
   BackHandler,
@@ -9,16 +8,19 @@ import {
   View,
 } from "react-native";
 import { useSelector } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
 
 import StyledButton from "../components/StyledButton";
-import colors from "../constants/colors";
-import { useDoubleBackPressExit } from "../helpers/DoublePressToExit";
+import GeneralStyles from "../constants/GeneralStyles";
+
 const { width, height } = Dimensions.get("screen");
+
 const MessageScreen = () => {
   const { specifiedSteps, walkedDistance, distanceMeasureUnit } = useSelector(
     (state) => state.step
   );
   const navigation = useNavigation();
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
@@ -27,18 +29,15 @@ const MessageScreen = () => {
         return true;
       }
     );
+
+    return () => {
+      backHandler;
+    };
   }, []);
+
   return (
     <View style={styles.container}>
-      <Text
-        style={{
-          color: colors.primary,
-          fontWeight: "bold",
-          fontSize: width > 356 ? 28 : 23,
-        }}
-      >
-        Congratulations!!!
-      </Text>
+      <Text style={GeneralStyles.title}>Congratulations!!!</Text>
 
       <Image
         source={require("../../assets/win.png")}
@@ -48,31 +47,11 @@ const MessageScreen = () => {
         }}
         resizeMode="contain"
       />
+      <Text style={styles.text}>You took all the steps you specified!</Text>
+      <Text style={styles.text}>Walked steps: {specifiedSteps}</Text>
       <Text
         style={{
-          fontSize: 18,
-          fontWeight: "bold",
-          color: colors.secondary,
-          marginBottom: 10,
-        }}
-      >
-        You took all the steps you specified!
-      </Text>
-      <Text
-        style={{
-          color: colors.secondary,
-          fontWeight: "bold",
-          fontSize: 18,
-          marginBottom: 10,
-        }}
-      >
-        Walked steps: {specifiedSteps}
-      </Text>
-      <Text
-        style={{
-          color: colors.secondary,
-          fontWeight: "bold",
-          fontSize: 18,
+          ...GeneralStyles.defaultText,
           marginBottom: height * 0.04,
         }}
       >
@@ -93,6 +72,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+  },
+  text: {
+    ...GeneralStyles.defaultText,
+    marginBottom: 10,
   },
 });
 
