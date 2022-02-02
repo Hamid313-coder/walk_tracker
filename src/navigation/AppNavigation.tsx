@@ -1,12 +1,15 @@
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
+
 import CustomScreen from "../screens/CustomScreen";
 import MapScreen from "../screens/MapScreen";
 import MessageScreen from "../screens/MessageScreen";
 import SetWalkScreen from "../screens/SetWalkScreen";
+
 const Stack = createNativeStackNavigator();
-function AppNavigation(props: any) {
+
+function AppNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator

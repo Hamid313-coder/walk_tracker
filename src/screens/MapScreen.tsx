@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  Dimensions,
   Pressable,
   StyleSheet,
   Text,
@@ -13,21 +12,22 @@ import { startCounter, stopCounter } from "react-native-accurate-step-counter";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import { lineString } from "@turf/helpers";
 import * as Location from "expo-location";
-import { LocationObject } from "expo-location";
 
 import StyledCard from "../components/StyledCard";
-import colors from "../constants/colors";
 
 import { setWalkedDistance } from "../store/actions/StepActions";
-import GeneralStyles from "../constants/GeneralStyles";
 
-const { width, height } = Dimensions.get("window");
+import GlobalStyles from "../constants/GlobalStyles";
+import colors from "../constants/colors";
+import size from "../constants/size";
+import MAPBOX_ACCESS_TOKEN from "../constants/MAPBOX_ACCESS_TOKEN";
 
-function MapScreen(props: any) {
-  MapboxGL.setAccessToken(
-    "sk.eyJ1IjoiaGFtaWRodXNzYWlueSIsImEiOiJja3lwbmJucWIwYm8yMzJucGNxM2g5OTYzIn0.CsdiL49YksEl7193h1HQlg"
-  );
-  const [curLocation, setCurLocation] = useState<LocationObject>();
+const { width, height } = size;
+
+function MapScreen() {
+  MapboxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
+
+  const [curLocation, setCurLocation] = useState<Location.LocationObject>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [route, setRoute] = useState();
   const [steps, setSteps] = useState<number>(0);
@@ -37,10 +37,11 @@ function MapScreen(props: any) {
   const spNumber = useSelector((state) => state.step.specifiedSteps);
   const userGender = useSelector((state) => state.userInfo.gender);
   const userHeight = useSelector((state) => state.userInfo.height);
-  const STEP_LENGTH =
-    (userHeight * (userGender === "male" ? 0.415 : 0.413)) / 2;
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const STEP_LENGTH =
+    (userHeight * (userGender === "male" ? 0.415 : 0.413)) / 2;
 
   useEffect(() => {
     setIsLoading(true);
@@ -52,7 +53,6 @@ function MapScreen(props: any) {
         alert("Permission to access location denied!");
         return;
       }
-
       const location = await Location.getCurrentPositionAsync({
         accuracy: Location.LocationAccuracy.BestForNavigation,
       });
@@ -106,11 +106,12 @@ function MapScreen(props: any) {
 
   if (isLoading) {
     return (
-      <View style={GeneralStyles.center}>
+      <View style={GlobalStyles.center}>
         <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
+
   return (
     <View
       style={{

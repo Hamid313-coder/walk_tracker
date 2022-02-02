@@ -1,8 +1,9 @@
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, View } from "react-native";
 import { CheckBox } from "react-native-elements";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import colors from "../constants/colors";
+import GlobalStyles from "../constants/GlobalStyles";
 
 function RadioButton(props: any) {
   return (
@@ -24,12 +25,11 @@ function RadioButton(props: any) {
       checked={props.checked}
       checkedColor={colors.primary}
       title={props.title}
-      textStyle={{ color: colors.secondary, fontSize: 18 }}
+      textStyle={GlobalStyles.defaultText}
       onPress={props.onPress}
       containerStyle={{ backgroundColor: "white", borderColor: "white" }}
     />
   );
 }
 
-const styles = StyleSheet.create({});
 export default RadioButton;

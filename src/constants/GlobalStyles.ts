@@ -1,7 +1,9 @@
 import { StyleSheet } from "react-native";
+
 import colors from "./colors";
 import size from "./size";
-const GeneralStyles = StyleSheet.create({
+
+const GlobalStyles = StyleSheet.create({
   defaultText: {
     color: colors.secondary,
     fontSize: 18,
@@ -12,7 +14,15 @@ const GeneralStyles = StyleSheet.create({
     fontSize: size.width > 356 ? 28 : 23,
     fontWeight: "bold",
   },
-  center: { flex: 1, justifyContent: "center", alignItems: "center" },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    width: size.width * 0.95,
+    height: size.height * 0.4,
+  },
 });
 
-export default GeneralStyles;
+export default GlobalStyles;

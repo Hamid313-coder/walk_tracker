@@ -1,34 +1,35 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
-import { Input } from "react-native-elements";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
+
 import RadioButton from "../components/RadioButton";
 import StyledButton from "../components/StyledButton";
-import colors from "../constants/colors";
+import StyledInput from "../components/StyledInput";
+
 import { setUserInfo } from "../store/actions/UserInfoActions";
-const { width, height } = Dimensions.get("screen");
+
+import GlobalStyles from "../constants/GlobalStyles";
+import size from "../constants/size";
+
+const { height } = size;
+
 function CustomScreen() {
   const [isMale, setIsMale] = useState<boolean>(true);
   const [userHeight, setUserHeight] = useState<String>();
   const [error, setError] = useState<String>("");
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
-        <Text
-          style={{
-            color: colors.primary,
-            fontSize: width > 356 ? 26 : 21,
-            paddingHorizontal: 10,
-            fontWeight: "bold",
-          }}
-        >
-          Specify your height & gender
-        </Text>
-        <Image source={require("../../assets/cust.png")} style={styles.image} />
+        <Text style={GlobalStyles.title}>Specify your height & gender</Text>
+        <Image
+          source={require("../../assets/cust.png")}
+          style={{ ...GlobalStyles.image, marginTop: height * 0.02 }}
+        />
         <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
           <RadioButton
             title="Male"
@@ -46,37 +47,21 @@ function CustomScreen() {
             flexDirection: "row",
             alignItems: "center",
             marginLeft: 5,
-            marginBottom: error ? 0 : 30,
+            marginBottom: error ? 0 : height * 0.04,
           }}
         >
-          <Text style={styles.text}>Height:</Text>
-          <Input
-            inputContainerStyle={{
-              position: "absolute",
-              justifyContent: "center",
-              alignSelf: "center",
-              height: height * 0.035,
-              width: width * 0.18,
-            }}
-            containerStyle={{
-              height: height * 0.06,
-              width: width * 0.195,
-              justifyContent: "center",
-            }}
-            keyboardType="numeric"
-            textAlign="center"
-            inputStyle={styles.text}
-            renderErrorMessage={false}
+          <Text style={GlobalStyles.defaultText}>Height:</Text>
+          <StyledInput
             onFocus={() => setError("")}
-            onChangeText={(text) => setUserHeight(text)}
+            onChangeText={(text: string) => setUserHeight(text)}
           />
-          <Text style={styles.text}>cm</Text>
+          <Text style={GlobalStyles.defaultText}>cm</Text>
         </View>
         {error ? (
           <Text
             style={{
               color: "red",
-              marginVertical: 10,
+              marginVertical: height * 0.02,
             }}
           >
             {error}
@@ -112,12 +97,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
   },
-  image: {
-    width: width * 0.95,
-    height: height * 0.4,
-    marginTop: height * 0.02,
-  },
-  text: { fontSize: 18, color: colors.secondary, fontWeight: "bold" },
 });
 
 export default CustomScreen;

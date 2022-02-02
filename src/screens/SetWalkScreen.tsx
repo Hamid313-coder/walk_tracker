@@ -1,23 +1,17 @@
 import React, { useState } from "react";
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-import { Input } from "react-native-elements";
 
 import StyledButton from "../components/StyledButton";
-import GeneralStyles from "../constants/GeneralStyles";
+import StyledInput from "../components/StyledInput";
 
 import { setSpecifiedSteps } from "../store/actions/StepActions";
 
-const width = Dimensions.get("screen").width;
-const height = Dimensions.get("screen").height;
+import GlobalStyles from "../constants/GlobalStyles";
+import size from "../constants/size";
+
+const { height } = size;
 
 const SetWalkScreen = () => {
   const dispatch = useDispatch();
@@ -28,47 +22,38 @@ const SetWalkScreen = () => {
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
-        <Text style={GeneralStyles.title}>Let's have some walking!</Text>
+        <Text style={GlobalStyles.title}>Let's have some walking!</Text>
         <Image
           source={require("../../assets/wal.png")}
-          style={styles.image}
+          style={GlobalStyles.image}
           resizeMode="contain"
         />
         <Text style={styles.guide}>
           Set the number of steps you want walk to today!
         </Text>
 
-        <View style={styles.input}>
+        <View
+          style={{ ...styles.input, marginBottom: error ? 0 : height * 0.04 }}
+        >
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
             }}
           >
-            <Text style={GeneralStyles.defaultText}>Number of steps: </Text>
-            <Input
-              keyboardType="numeric"
+            <Text style={GlobalStyles.defaultText}>Number of steps: </Text>
+            <StyledInput
               onFocus={() => setError("")}
-              onChangeText={(text) => setNumber(Number(text).toFixed(0))}
-              inputStyle={{
-                ...GeneralStyles.defaultText,
-                textAlign: "center",
-              }}
-              inputContainerStyle={{
-                position: "absolute",
-                height: height * 0.035,
-                width: width * 0.195,
-              }}
-              containerStyle={{
-                flexDirection: "column",
-                height: height * 0.06,
-                width: width * 0.198,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+              onChangeText={(text: string) =>
+                setNumber(Number(text).toFixed(0))
+              }
             />
           </View>
-          {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
+          {error ? (
+            <Text style={{ color: "red", marginVertical: height * 0.02 }}>
+              {error}
+            </Text>
+          ) : null}
         </View>
 
         <StyledButton
@@ -77,7 +62,7 @@ const SetWalkScreen = () => {
             const num = Number(number);
 
             //validation for input.
-            if (isFinite(num) && num >= 500) {
+            if (isFinite(num) && num >= 5) {
               dispatch(setSpecifiedSteps(num));
               setError("");
               navigation.navigate("map");
@@ -102,18 +87,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexGrow: 1,
   },
-  image: {
-    width: width * 0.95,
-    height: height * 0.4,
-  },
-
   input: {
     justifyContent: "center",
     marginVertical: 10,
     alignItems: "center",
   },
   guide: {
-    ...GeneralStyles.defaultText,
+    ...GlobalStyles.defaultText,
     textAlign: "center",
     paddingHorizontal: 20,
   },

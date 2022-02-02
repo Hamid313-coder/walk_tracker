@@ -1,19 +1,12 @@
 import React, { useEffect } from "react";
-import {
-  BackHandler,
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { BackHandler, Image, StyleSheet, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import StyledButton from "../components/StyledButton";
-import GeneralStyles from "../constants/GeneralStyles";
 
-const { width, height } = Dimensions.get("screen");
+import GlobalStyles from "../constants/GlobalStyles";
+import size from "../constants/size";
 
 const MessageScreen = () => {
   const { specifiedSteps, walkedDistance, distanceMeasureUnit } = useSelector(
@@ -29,7 +22,6 @@ const MessageScreen = () => {
         return true;
       }
     );
-
     return () => {
       backHandler;
     };
@@ -37,24 +29,16 @@ const MessageScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={GeneralStyles.title}>Congratulations!!!</Text>
+      <Text style={GlobalStyles.title}>Congratulations!!!</Text>
 
       <Image
         source={require("../../assets/win.png")}
-        style={{
-          width: width * 0.95,
-          height: height * 0.4,
-        }}
+        style={GlobalStyles.image}
         resizeMode="contain"
       />
       <Text style={styles.text}>You took all the steps you specified!</Text>
       <Text style={styles.text}>Walked steps: {specifiedSteps}</Text>
-      <Text
-        style={{
-          ...GeneralStyles.defaultText,
-          marginBottom: height * 0.04,
-        }}
-      >
+      <Text style={styles.distanceText}>
         Walked distance: {walkedDistance.toFixed(1)} {distanceMeasureUnit}
       </Text>
 
@@ -74,8 +58,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   text: {
-    ...GeneralStyles.defaultText,
+    ...GlobalStyles.defaultText,
     marginBottom: 10,
+  },
+  distanceText: {
+    ...GlobalStyles.defaultText,
+    marginBottom: size.height * 0.04,
   },
 });
 

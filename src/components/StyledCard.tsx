@@ -1,14 +1,18 @@
 import React from "react";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Card } from "react-native-elements";
+
 import colors from "../constants/colors";
+import GlobalStyles from "../constants/GlobalStyles";
+import size from "../constants/size";
 
 function StyledCard(props: any) {
   const { title, rest } = props;
+
   return (
     <Card containerStyle={styles.container}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={GlobalStyles.defaultText}>{title}</Text>
         <Text style={styles.rest}>{rest}</Text>
       </View>
     </Card>
@@ -17,15 +21,10 @@ function StyledCard(props: any) {
 
 const styles = StyleSheet.create({
   container: {
-    height: Dimensions.get("screen").height * 0.075,
+    height: size.height * 0.075,
     width: "100%",
     borderRadius: 5,
     justifyContent: "center",
-  },
-  title: {
-    fontSize: 18,
-    color: colors.secondary,
-    fontWeight: "bold",
   },
   rest: {
     color: colors.primary,
