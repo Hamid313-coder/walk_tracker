@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -6,14 +6,15 @@ import CustomScreen from "../screens/CustomScreen";
 import MapScreen from "../screens/MapScreen";
 import MessageScreen from "../screens/MessageScreen";
 import SetWalkScreen from "../screens/SetWalkScreen";
+import AsyncStorageLib from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
-function AppNavigation() {
+function AppNavigation(props: any) {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="custom"
+        initialRouteName={props.isUserInfoAvailable ? "setWalk" : "custom"}
         defaultScreenOptions={{
           headerShown: false,
           statusBarStyle: "dark",
@@ -24,6 +25,7 @@ function AppNavigation() {
           component={CustomScreen}
           options={{ headerShown: false, statusBarStyle: "dark" }}
         />
+
         <Stack.Screen
           name="setWalk"
           component={SetWalkScreen}

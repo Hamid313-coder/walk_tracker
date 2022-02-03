@@ -12,6 +12,7 @@ import { setUserInfo } from "../store/actions/UserInfoActions";
 
 import GlobalStyles from "../constants/GlobalStyles";
 import size from "../constants/size";
+import AsyncStorageLib from "@react-native-async-storage/async-storage";
 
 const { height } = size;
 
@@ -69,12 +70,19 @@ function CustomScreen() {
         ) : null}
         <StyledButton
           title="Next"
-          onPress={() => {
+          onPress={async () => {
             const num = Number(userHeight);
             //validation for input.
             if (isFinite(num) && num > 0) {
               dispatch(setUserInfo(isMale ? "male" : "female", num));
               setError("");
+              await AsyncStorageLib.setItem(
+                "userInfo",
+                JSON.stringify({
+                  gender: isMale ? "male" : "female",
+                  userHeight: num,
+                })
+              );
               navigation.navigate("setWalk");
             } else {
               setError(

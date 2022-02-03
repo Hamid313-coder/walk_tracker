@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
@@ -10,6 +17,7 @@ import { setSpecifiedSteps } from "../store/actions/StepActions";
 
 import GlobalStyles from "../constants/GlobalStyles";
 import size from "../constants/size";
+import colors from "../constants/colors";
 
 const { height } = size;
 
@@ -62,7 +70,7 @@ const SetWalkScreen = () => {
             const num = Number(number);
 
             //validation for input.
-            if (isFinite(num) && num >= 5) {
+            if (isFinite(num) && num >= 500) {
               dispatch(setSpecifiedSteps(num));
               setError("");
               navigation.navigate("map");
@@ -76,6 +84,22 @@ const SetWalkScreen = () => {
           }}
         />
       </View>
+      <Pressable
+        onPress={() => {
+          navigation.navigate("custom");
+        }}
+        style={{ position: "absolute", bottom: 30 }}
+      >
+        <Text
+          style={{
+            color: colors.secondary,
+            fontSize: 16,
+            textDecorationLine: "underline",
+          }}
+        >
+          Change height and gender
+        </Text>
+      </Pressable>
     </ScrollView>
   );
 };
