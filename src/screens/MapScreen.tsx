@@ -89,7 +89,7 @@ function MapScreen() {
         setSteps(stepCount);
       },
       onCheat: () => {
-        console.log("User is Cheating");
+        alert("Please don't cheat!");
       },
     };
     startCounter(config);
