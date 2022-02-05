@@ -19,6 +19,12 @@ const GlobalStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  container: {
+    backgroundColor: colors.white,
+    justifyContent: "center",
+    alignItems: "center",
+    flexGrow: 1,
+  },
   image: {
     width: size.width * 0.95,
     height: size.height * 0.4,

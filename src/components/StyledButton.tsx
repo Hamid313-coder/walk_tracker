@@ -27,10 +27,15 @@ const styles = StyleSheet.create({
     height: buttonHeight,
     backgroundColor: colors.primary,
     borderRadius: buttonHeight / 2,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 5,
   },
   container: {
     elevation: 3,
     borderRadius: buttonHeight / 2,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

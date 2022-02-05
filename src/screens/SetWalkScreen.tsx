@@ -28,7 +28,7 @@ const SetWalkScreen = () => {
   const [error, setError] = useState("");
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
+    <ScrollView contentContainerStyle={GlobalStyles.container}>
       <View style={{ alignItems: "center", justifyContent: "center" }}>
         <Text style={GlobalStyles.title}>Let's have some walking!</Text>
         <Image
@@ -105,12 +105,6 @@ const SetWalkScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    flexGrow: 1,
-  },
   input: {
     justifyContent: "center",
     marginVertical: 10,

@@ -58,6 +58,7 @@ function MapScreen() {
       });
       coords.push([location.coords.longitude, location.coords.latitude]);
       setCurLocation(location);
+      console.log(location);
       setIsLoading(false);
     })();
   }, []);
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
     width: width,
   },
   bottomContainer: {
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     width: width,
     alignItems: "center",
     padding: 10,

@@ -7,6 +7,7 @@ import StyledButton from "../components/StyledButton";
 
 import GlobalStyles from "../constants/GlobalStyles";
 import size from "../constants/size";
+import colors from "../constants/colors";
 
 const MessageScreen = () => {
   const { specifiedSteps, walkedDistance, distanceMeasureUnit } = useSelector(
@@ -28,7 +29,7 @@ const MessageScreen = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={GlobalStyles.container}>
       <Text style={GlobalStyles.title}>Congratulations!!!</Text>
 
       <Image
@@ -51,12 +52,6 @@ const MessageScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
   text: {
     ...GlobalStyles.defaultText,
     marginBottom: 10,

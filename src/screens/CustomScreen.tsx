@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
+import AsyncStorageLib from "@react-native-async-storage/async-storage";
 
 import RadioButton from "../components/RadioButton";
 import StyledButton from "../components/StyledButton";
@@ -12,7 +13,6 @@ import { setUserInfo } from "../store/actions/UserInfoActions";
 
 import GlobalStyles from "../constants/GlobalStyles";
 import size from "../constants/size";
-import AsyncStorageLib from "@react-native-async-storage/async-storage";
 
 const { height } = size;
 
@@ -24,7 +24,7 @@ function CustomScreen() {
   const dispatch = useDispatch();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={GlobalStyles.container}>
       <View style={{ justifyContent: "center", alignItems: "center" }}>
         <Text style={GlobalStyles.title}>Specify your height & gender</Text>
         <Image
@@ -97,14 +97,5 @@ function CustomScreen() {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-  },
-});
 
 export default CustomScreen;

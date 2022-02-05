@@ -10,7 +10,10 @@ function StyledCard(props: any) {
   const { title, rest } = props;
 
   return (
-    <Card containerStyle={styles.container}>
+    <Card
+      containerStyle={styles.container}
+      wrapperStyle={{ height: size.height * 0.075, justifyContent: "center" }}
+    >
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={GlobalStyles.defaultText}>{title}</Text>
         <Text style={styles.rest}>{rest}</Text>
