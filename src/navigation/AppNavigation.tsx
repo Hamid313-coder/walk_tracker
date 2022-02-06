@@ -45,35 +45,12 @@ function AppNavigation() {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName={isUserInfoAvailable ? "setWalk" : "custom"}
-        defaultScreenOptions={{
-          headerShown: false,
-          statusBarStyle: "dark",
-        }}
+        screenOptions={{ headerShown: false, statusBarStyle: "dark" }}
       >
-        <Stack.Screen
-          name="custom"
-          component={CustomScreen}
-          options={{ headerShown: false, statusBarStyle: "dark" }}
-        />
-
-        <Stack.Screen
-          name="setWalk"
-          component={SetWalkScreen}
-          options={{ headerShown: false, statusBarStyle: "dark" }}
-        />
-        <Stack.Screen
-          name="map"
-          component={MapScreen}
-          options={{
-            headerShown: false,
-            statusBarStyle: "dark",
-          }}
-        />
-        <Stack.Screen
-          name="message"
-          component={MessageScreen}
-          options={{ headerShown: false, statusBarStyle: "dark" }}
-        />
+        <Stack.Screen name="custom" component={CustomScreen} />
+        <Stack.Screen name="setWalk" component={SetWalkScreen} />
+        <Stack.Screen name="map" component={MapScreen} />
+        <Stack.Screen name="message" component={MessageScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

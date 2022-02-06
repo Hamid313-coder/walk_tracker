@@ -29,7 +29,7 @@ const SetWalkScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={GlobalStyles.container}>
-      <View style={{ alignItems: "center", justifyContent: "center" }}>
+      <View style={styles.center}>
         <Text style={GlobalStyles.title}>Let's have some walking!</Text>
         <Image
           source={require("../../assets/wal.png")}
@@ -41,27 +41,21 @@ const SetWalkScreen = () => {
         </Text>
 
         <View
-          style={{ ...styles.input, marginBottom: error ? 0 : height * 0.04 }}
+          style={{
+            ...styles.inputWrapper,
+            marginBottom: error ? 0 : height * 0.04,
+          }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
+          <View style={styles.inputContainer}>
             <Text style={GlobalStyles.defaultText}>Number of steps: </Text>
             <StyledInput
               onFocus={() => setError("")}
               onChangeText={(text: string) =>
-                setNumber(Number(text).toFixed(0))
+                setNumber(Number(text.trim()).toFixed(0))
               }
             />
           </View>
-          {error ? (
-            <Text style={{ color: "red", marginVertical: height * 0.02 }}>
-              {error}
-            </Text>
-          ) : null}
+          {error ? <Text style={styles.error}>{error}</Text> : null}
         </View>
 
         <StyledButton
@@ -88,32 +82,45 @@ const SetWalkScreen = () => {
         onPress={() => {
           navigation.navigate("custom");
         }}
-        style={{ position: "absolute", bottom: 30 }}
+        style={styles.setting}
       >
-        <Text
-          style={{
-            color: colors.secondary,
-            fontSize: 16,
-            textDecorationLine: "underline",
-          }}
-        >
-          Change height and gender
-        </Text>
+        <Text style={styles.textSetting}>Change height and gender</Text>
       </Pressable>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  input: {
+  center: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputWrapper: {
     justifyContent: "center",
     marginVertical: 10,
+    alignItems: "center",
+  },
+  inputContainer: {
+    flexDirection: "row",
     alignItems: "center",
   },
   guide: {
     ...GlobalStyles.defaultText,
     textAlign: "center",
     paddingHorizontal: 20,
+  },
+  error: {
+    color: "red",
+    marginVertical: height * 0.02,
+  },
+  setting: {
+    position: "absolute",
+    bottom: size.height * 0.03,
+  },
+  textSetting: {
+    color: colors.secondary,
+    fontSize: 15,
+    textDecorationLine: "underline",
   },
 });
 

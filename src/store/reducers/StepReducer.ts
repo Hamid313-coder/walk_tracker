@@ -5,7 +5,6 @@ import {
 
 const initialState = {
   specifiedSteps: null,
-  // walkedSteps: null,
   walkedDistance: null,
   distanceMeasureUnit: null,
 };

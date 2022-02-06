@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
@@ -25,13 +25,10 @@ function CustomScreen() {
 
   return (
     <ScrollView contentContainerStyle={GlobalStyles.container}>
-      <View style={{ justifyContent: "center", alignItems: "center" }}>
+      <View style={styles.center}>
         <Text style={GlobalStyles.title}>Specify your height & gender</Text>
-        <Image
-          source={require("../../assets/cust.png")}
-          style={{ ...GlobalStyles.image, marginTop: height * 0.02 }}
-        />
-        <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+        <Image source={require("../../assets/cust.png")} style={styles.image} />
+        <View style={styles.radioContainer}>
           <RadioButton
             title="Male"
             checked={isMale}
@@ -58,16 +55,7 @@ function CustomScreen() {
           />
           <Text style={GlobalStyles.defaultText}>cm</Text>
         </View>
-        {error ? (
-          <Text
-            style={{
-              color: "red",
-              marginVertical: height * 0.02,
-            }}
-          >
-            {error}
-          </Text>
-        ) : null}
+        {error ? <Text style={styles.error}>{error}</Text> : null}
         <StyledButton
           title="Next"
           onPress={async () => {
@@ -97,5 +85,24 @@ function CustomScreen() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  center: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  image: {
+    ...GlobalStyles.image,
+    marginTop: height * 0.02,
+  },
+  radioContainer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  error: {
+    color: "red",
+    marginVertical: height * 0.02,
+  },
+});
 
 export default CustomScreen;

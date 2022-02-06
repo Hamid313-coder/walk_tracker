@@ -1,11 +1,14 @@
 import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Provider, useDispatch } from "react-redux";
+import { Provider } from "react-redux";
 import { combineReducers, createStore } from "redux";
 
 import AppNavigation from "./src/navigation/AppNavigation";
+
 import StepReducer from "./src/store/reducers/StepReducer";
 import UserInfoReducer from "./src/store/reducers/UserInfoReducer";
+
+import colors from "./src/constants/colors";
 
 export default function App() {
   const reducers = combineReducers({
@@ -27,6 +30,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
   },
 });

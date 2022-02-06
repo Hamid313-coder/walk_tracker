@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, Pressable, StyleSheet, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { startCounter, stopCounter } from "react-native-accurate-step-counter";
 import MapboxGL from "@react-native-mapbox-gl/maps";
 import { lineString } from "@turf/helpers";
 import * as Location from "expo-location";
+import { Ionicons } from "@expo/vector-icons";
 
 import StyledCard from "../components/StyledCard";
 
@@ -58,7 +53,6 @@ function MapScreen() {
       });
       coords.push([location.coords.longitude, location.coords.latitude]);
       setCurLocation(location);
-      console.log(location);
       setIsLoading(false);
     })();
   }, []);
@@ -114,28 +108,9 @@ function MapScreen() {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-      }}
-    >
-      <Pressable
-        onPress={() => navigation.goBack()}
-        style={{
-          width: 45,
-          height: 45,
-          backgroundColor: "lightgrey",
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 25,
-          zIndex: 100,
-          position: "absolute",
-          top: 10,
-          left: 15,
-        }}
-      >
-        <Text style={{ fontSize: 14 }}>👈🏻</Text>
+    <View style={styles.container}>
+      <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="black" />
       </Pressable>
       {curLocation && (
         <MapboxGL.MapView
@@ -190,17 +165,33 @@ function MapScreen() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+  },
   map: {
     height: height * 0.62,
     width: width,
   },
   bottomContainer: {
     backgroundColor: colors.white,
-    width: width,
+    width,
     alignItems: "center",
     padding: 10,
     justifyContent: "space-evenly",
     flex: 1,
+  },
+  backButton: {
+    width: 45,
+    height: 45,
+    backgroundColor: "lightgrey",
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 25,
+    zIndex: 100,
+    position: "absolute",
+    top: 10,
+    left: 15,
   },
 });
 

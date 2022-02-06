@@ -13,6 +13,7 @@ const GlobalStyles = StyleSheet.create({
     color: colors.primary,
     fontSize: size.width > 356 ? 28 : 23,
     fontWeight: "bold",
+    textAlign: "center",
   },
   center: {
     flex: 1,

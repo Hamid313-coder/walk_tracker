@@ -14,10 +14,7 @@ function StyledInput(props: any) {
       onFocus={props.onFocus}
       onChangeText={props.onChangeText}
       renderErrorMessage={false}
-      inputStyle={{
-        ...GlobalStyles.defaultText,
-        textAlign: "center",
-      }}
+      inputStyle={styles.input}
       containerStyle={styles.container}
       inputContainerStyle={styles.inputContainer}
     />
@@ -31,6 +28,10 @@ const styles = StyleSheet.create({
     width: width * 0.198,
     justifyContent: "center",
     alignItems: "center",
+  },
+  input: {
+    ...GlobalStyles.defaultText,
+    textAlign: "center",
   },
   inputContainer: {
     position: "absolute",

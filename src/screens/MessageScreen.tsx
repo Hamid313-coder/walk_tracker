@@ -7,7 +7,6 @@ import StyledButton from "../components/StyledButton";
 
 import GlobalStyles from "../constants/GlobalStyles";
 import size from "../constants/size";
-import colors from "../constants/colors";
 
 const MessageScreen = () => {
   const { specifiedSteps, walkedDistance, distanceMeasureUnit } = useSelector(
