@@ -14,6 +14,7 @@ const MessageScreen = () => {
   );
   const navigation = useNavigation();
 
+  //----------------------Navigating back to the setWalk screen---------------------------
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",

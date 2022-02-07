@@ -38,6 +38,7 @@ function MapScreen() {
   const STEP_LENGTH =
     (userHeight * (userGender === "male" ? 0.415 : 0.413)) / 2;
 
+  //-----------------------Getting the initial user location------------------------------
   useEffect(() => {
     setIsLoading(true);
     (async () => {
@@ -57,6 +58,7 @@ function MapScreen() {
     })();
   }, []);
 
+  //------------------------Drawing user walked path----------------------------------
   useEffect(() => {
     if (coords.length > 1) {
       const newRoute = lineString(coords);
@@ -64,6 +66,7 @@ function MapScreen() {
     }
   }, [coords]);
 
+  //---------------------------Counting steps and setting the distance  measure unit----------------------------------
   useEffect(() => {
     const config = {
       default_threshold: 15.0,
@@ -92,6 +95,7 @@ function MapScreen() {
     };
   }, []);
 
+  //------------------------------Navigate to message screen when the steps completed-------------------
   useEffect(() => {
     if (steps === spNumber) {
       dispatch(setWalkedDistance(distance, unit));

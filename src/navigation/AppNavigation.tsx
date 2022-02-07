@@ -22,6 +22,7 @@ function AppNavigation() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
+  //----------------------checking for user info---------------------------------------
   useEffect(() => {
     (async () => {
       setIsLoading(true);
