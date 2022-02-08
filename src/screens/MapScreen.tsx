@@ -119,7 +119,7 @@ function MapScreen() {
       {curLocation && (
         <MapboxGL.MapView
           style={styles.map}
-          styleURL={MapboxGL.StyleURL.Outdoors}
+          // styleURL={MapboxGL?.StyleURL?.Outdoors}
         >
           {route && (
             <MapboxGL.ShapeSource shape={route} id="lineShape">

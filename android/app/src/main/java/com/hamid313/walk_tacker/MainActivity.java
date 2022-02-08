@@ -1,4 +1,5 @@
 package com.hamid313.walk_tacker;
+import android.os.Bundle;
 import org.devio.rn.splashscreen.SplashScreen; 
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +17,6 @@ public class MainActivity extends ReactActivity {
     // coloring the background, status bar, and navigation bar.
     // This is required for expo-splash-screen.
     SplashScreen.show(this);
-    setTheme(R.style.AppTheme);
     super.onCreate(null);
   }
 

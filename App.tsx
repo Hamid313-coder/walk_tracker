@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import SplashScreen from "react-native-splash-screen";
 import { StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
@@ -16,6 +18,10 @@ export default function App() {
     userInfo: UserInfoReducer,
   });
   const store = createStore(reducers);
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <View style={styles.container}>

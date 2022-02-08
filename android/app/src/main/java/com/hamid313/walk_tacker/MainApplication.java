@@ -1,5 +1,6 @@
 package com.hamid313.walk_tacker;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.mapbox.rctmgl.RCTMGLPackage;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -35,6 +36,7 @@ public class MainApplication extends Application implements ReactApplication {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       // Packages that cannot be autolinked yet can be added manually here, for example:
       packages.add(new SplashScreenReactPackage());
+      packages.add(new RCTMGLPackage());
       return packages;
     }
 
