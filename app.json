@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "walk_tacker",
-    "slug": "walk_tacker",
+    "name": "Walk Tracker",
+    "slug": "walk_tracker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/walk.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -17,17 +17,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "hamid313"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/walk.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.hamid313.walk_tacker"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/walk.png"
     }
   }
 }
