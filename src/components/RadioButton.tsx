@@ -1,9 +1,9 @@
-import React from "react";
-import { CheckBox } from "react-native-elements";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from 'react';
+import {CheckBox} from 'react-native-elements';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import colors from "../constants/colors";
-import GlobalStyles from "../constants/GlobalStyles";
+import colors from '../constants/colors';
+import GlobalStyles from '../constants/GlobalStyles';
 
 function RadioButton(props: any) {
   return (
@@ -27,7 +27,7 @@ function RadioButton(props: any) {
       title={props.title}
       textStyle={GlobalStyles.defaultText}
       onPress={props.onPress}
-      containerStyle={{ backgroundColor: "white", borderColor: "white" }}
+      containerStyle={{backgroundColor: 'white', borderColor: 'white'}}
     />
   );
 }

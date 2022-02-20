@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useState} from 'react';
 import {
   Image,
   Pressable,
@@ -6,33 +6,33 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { useDispatch } from "react-redux";
-import { useNavigation } from "@react-navigation/native";
+} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
 
-import StyledButton from "../components/StyledButton";
-import StyledInput from "../components/StyledInput";
+import StyledButton from '../components/StyledButton';
+import StyledInput from '../components/StyledInput';
 
-import { setSpecifiedSteps } from "../store/actions/StepActions";
+import {setSpecifiedSteps} from '../store/actions/StepActions';
 
-import GlobalStyles from "../constants/GlobalStyles";
-import size from "../constants/size";
-import colors from "../constants/colors";
+import GlobalStyles from '../constants/GlobalStyles';
+import size from '../constants/size';
+import colors from '../constants/colors';
 
-const { height } = size;
+const {height} = size;
 
 const SetWalkScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const [number, setNumber] = useState("");
-  const [error, setError] = useState("");
+  const [number, setNumber] = useState('');
+  const [error, setError] = useState('');
 
   return (
     <ScrollView contentContainerStyle={GlobalStyles.container}>
       <View style={styles.center}>
         <Text style={GlobalStyles.title}>Let's have some walking!</Text>
         <Image
-          source={require("../../assets/wal.png")}
+          source={require('../../assets/wal.png')}
           style={GlobalStyles.image}
           resizeMode="contain"
         />
@@ -44,12 +44,11 @@ const SetWalkScreen = () => {
           style={{
             ...styles.inputWrapper,
             marginBottom: error ? 0 : height * 0.04,
-          }}
-        >
+          }}>
           <View style={styles.inputContainer}>
             <Text style={GlobalStyles.defaultText}>Number of steps: </Text>
             <StyledInput
-              onFocus={() => setError("")}
+              onFocus={() => setError('')}
               onChangeText={(text: string) =>
                 setNumber(Number(text.trim()).toFixed(0))
               }
@@ -64,15 +63,15 @@ const SetWalkScreen = () => {
             const num = Number(number);
 
             //validation for input.
-            if (isFinite(num) && num >= 500) {
+            if (isFinite(num) && num >= 5) {
               dispatch(setSpecifiedSteps(num));
-              setError("");
-              navigation.navigate("map");
+              setError('');
+              navigation.navigate('map');
             } else {
               setError(
                 num < 500
-                  ? "Sorry! It must be at least 500."
-                  : "Please enter a number!"
+                  ? 'Sorry! It must be at least 500.'
+                  : 'Please enter a number!',
               );
             }
           }}
@@ -80,10 +79,9 @@ const SetWalkScreen = () => {
       </View>
       <Pressable
         onPress={() => {
-          navigation.navigate("custom");
+          navigation.navigate('custom');
         }}
-        style={styles.setting}
-      >
+        style={styles.setting}>
         <Text style={styles.textSetting}>Change height and gender</Text>
       </Pressable>
     </ScrollView>
@@ -92,35 +90,35 @@ const SetWalkScreen = () => {
 
 const styles = StyleSheet.create({
   center: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   inputWrapper: {
-    justifyContent: "center",
+    justifyContent: 'center',
     marginVertical: 10,
-    alignItems: "center",
+    alignItems: 'center',
   },
   inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   guide: {
     ...GlobalStyles.defaultText,
-    textAlign: "center",
+    textAlign: 'center',
     paddingHorizontal: 20,
   },
   error: {
-    color: "red",
+    color: 'red',
     marginVertical: height * 0.02,
   },
   setting: {
-    position: "absolute",
+    position: 'absolute',
     bottom: size.height * 0.03,
   },
   textSetting: {
     color: colors.secondary,
     fontSize: 15,
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
   },
 });
 
