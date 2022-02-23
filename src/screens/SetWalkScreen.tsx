@@ -60,6 +60,7 @@ const SetWalkScreen = () => {
         <StyledButton
           title="Set & Start"
           onPress={() => {
+            console.log(!!number);
             const num = Number(number);
 
             //validation for input.

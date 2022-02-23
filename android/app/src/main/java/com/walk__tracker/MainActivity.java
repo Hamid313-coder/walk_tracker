@@ -1,4 +1,4 @@
-package com.walk_tracker;
+package com.walk__tracker;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "walk_tracker";
+    return "walk__tracker";
   }
 }

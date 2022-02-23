@@ -1,29 +1,29 @@
-import { StyleSheet } from "react-native";
+import {StyleSheet} from 'react-native';
 
-import colors from "./colors";
-import size from "./size";
+import colors from './colors';
+import size from './size';
 
 const GlobalStyles = StyleSheet.create({
   defaultText: {
     color: colors.secondary,
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   title: {
     color: colors.primary,
     fontSize: size.width > 356 ? 28 : 23,
-    fontWeight: "bold",
-    textAlign: "center",
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   center: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   container: {
     backgroundColor: colors.white,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     flexGrow: 1,
   },
   image: {

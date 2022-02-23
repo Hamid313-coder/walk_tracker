@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "walk_tracker.app"
-               BlueprintName = "walk_tracker"
-               ReferencedContainer = "container:walk_tracker.xcodeproj">
+               BuildableName = "walk__tracker.app"
+               BlueprintName = "walk__tracker"
+               ReferencedContainer = "container:walk__tracker.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "walk_trackerTests.xctest"
-               BlueprintName = "walk_trackerTests"
-               ReferencedContainer = "container:walk_tracker.xcodeproj">
+               BuildableName = "walk__trackerTests.xctest"
+               BlueprintName = "walk__trackerTests"
+               ReferencedContainer = "container:walk__tracker.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "walk_tracker.app"
-            BlueprintName = "walk_tracker"
-            ReferencedContainer = "container:walk_tracker.xcodeproj">
+            BuildableName = "walk__tracker.app"
+            BlueprintName = "walk__tracker"
+            ReferencedContainer = "container:walk__tracker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "walk_tracker.app"
-            BlueprintName = "walk_tracker"
-            ReferencedContainer = "container:walk_tracker.xcodeproj">
+            BuildableName = "walk__tracker.app"
+            BlueprintName = "walk__tracker"
+            ReferencedContainer = "container:walk__tracker.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

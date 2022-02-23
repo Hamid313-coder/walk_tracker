@@ -1,11 +1,11 @@
-import React from "react";
-import { StyleSheet } from "react-native";
-import { Input } from "react-native-elements";
+import React from 'react';
+import {StyleSheet} from 'react-native';
+import {Input} from 'react-native-elements';
 
-import GlobalStyles from "../constants/GlobalStyles";
-import size from "../constants/size";
+import GlobalStyles from '../constants/GlobalStyles';
+import size from '../constants/size';
 
-const { width, height } = size;
+const {width, height} = size;
 
 function StyledInput(props: any) {
   return (
@@ -23,18 +23,19 @@ function StyledInput(props: any) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
+    flexDirection: 'column',
     height: height * 0.06,
     width: width * 0.198,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   input: {
     ...GlobalStyles.defaultText,
-    textAlign: "center",
+    textAlign: 'center',
+    height: height * 0.067,
   },
   inputContainer: {
-    position: "absolute",
+    position: 'absolute',
     height: height * 0.035,
     width: width * 0.195,
   },

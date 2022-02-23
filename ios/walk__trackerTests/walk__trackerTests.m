@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface walk_trackerTests : XCTestCase
+@interface walk__trackerTests : XCTestCase
 
 @end
 
-@implementation walk_trackerTests
+@implementation walk__trackerTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL(^)(UIView *view))test
 {

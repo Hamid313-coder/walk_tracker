@@ -3,8 +3,9 @@ import {ActivityIndicator, Pressable, StyleSheet, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {startCounter, stopCounter} from 'react-native-accurate-step-counter';
-// import MapboxGL from "@react-native-mapbox-gl/maps";
-// import { lineString } from "@turf/helpers";
+import MapboxGL from '@react-native-mapbox-gl/maps';
+import {lineString} from '@turf/helpers';
+import GetLocation from 'react-native-get-location';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import StyledCard from '../components/StyledCard';
@@ -14,14 +15,14 @@ import {setWalkedDistance} from '../store/actions/StepActions';
 import GlobalStyles from '../constants/GlobalStyles';
 import colors from '../constants/colors';
 import size from '../constants/size';
-// import MAPBOX_ACCESS_TOKEN from '../constants/MAPBOX_ACCESS_TOKEN';
+import MAPBOX_ACCESS_TOKEN from '../constants/MAPBOX_ACCESS_TOKEN';
 
 const {width, height} = size;
 
 function MapScreen() {
-  // MapboxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
+  MapboxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
-  // const [curLocation, setCurLocation] = useState<Location.LocationObject>();
+  const [curLocation, setCurLocation] = useState();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [route, setRoute] = useState();
   const [steps, setSteps] = useState<number>(0);
@@ -38,32 +39,32 @@ function MapScreen() {
     (userHeight * (userGender === 'male' ? 0.415 : 0.413)) / 2;
 
   //-----------------------Getting the initial user location------------------------------
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   (async () => {
-  //     const { status } = await Location.requestForegroundPermissionsAsync();
-  //     const mapPer = await MapboxGL.requestAndroidLocationPermissions();
+  useEffect(() => {
+    setIsLoading(true);
+    (async () => {
+      const mapPer = await MapboxGL.requestAndroidLocationPermissions();
 
-  //     if (status !== "granted" && !mapPer) {
-  //       alert("Permission to access location denied!");
-  //       return;
-  //     }
-  //     const location = await Location.getCurrentPositionAsync({
-  //       accuracy: Location.LocationAccuracy.BestForNavigation,
-  //     });
-  //     coords.push([location.coords.longitude, location.coords.latitude]);
-  //     setCurLocation(location);
-  //     setIsLoading(false);
-  //   })();
-  // }, []);
+      if (!mapPer) {
+        alert('Permission to access location denied!');
+        return;
+      }
+      const location = await GetLocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 15000,
+      });
+      coords.push([location.longitude, location.latitude]);
+      setCurLocation(location);
+      setIsLoading(false);
+    })();
+  }, []);
 
   //------------------------Drawing user walked path----------------------------------
-  // useEffect(() => {
-  //   if (coords.length > 1) {
-  //     const newRoute = lineString(coords);
-  //     setRoute(newRoute);
-  //   }
-  // }, [coords]);
+  useEffect(() => {
+    if (coords.length > 1) {
+      const newRoute = lineString(coords);
+      setRoute(newRoute);
+    }
+  }, [coords]);
 
   //---------------------------Counting steps and setting the distance  measure unit----------------------------------
   useEffect(() => {
@@ -115,7 +116,7 @@ function MapScreen() {
       <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </Pressable>
-      {/* {curLocation && (
+      {curLocation && (
         <MapboxGL.MapView
           style={styles.map}
           // styleURL={MapboxGL?.StyleURL?.Outdoors}
@@ -126,7 +127,7 @@ function MapScreen() {
                 id="lineId"
                 style={{
                   lineWidth: 5,
-                  lineJoin: "bevel",
+                  lineJoin: 'bevel',
                   lineColor: colors.secondary,
                 }}
               />
@@ -136,7 +137,7 @@ function MapScreen() {
             minDisplacement={5}
             androidRenderMode="compass"
             visible
-            onUpdate={(uLocation) => {
+            onUpdate={uLocation => {
               coords.push([
                 uLocation.coords.longitude,
                 uLocation.coords.latitude,
@@ -149,12 +150,11 @@ function MapScreen() {
             followUserLocation
             zoomLevel={17}
             centerCoordinate={[
-              curLocation.coords.longitude,
-              curLocation.coords.latitude,
-            ]}
-          ></MapboxGL.Camera>
+              curLocation.longitude,
+              curLocation.latitude,
+            ]}></MapboxGL.Camera>
         </MapboxGL.MapView>
-      )} */}
+      )}
       <View style={styles.bottomContainer}>
         <StyledCard title="Specified steps" rest={spNumber} />
         <StyledCard title="Walked steps" rest={steps} />

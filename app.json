@@ -1,4 +1,10 @@
 {
-  "name": "walk_tracker",
-  "displayName": "walk_tracker"
+  "name": "walk__tracker",
+  "displayName": "walk__tracker",
+  "android": {
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/walk.png",
+      "backgroundColor": "#FFFFFF"
+    }
+  }
 }
