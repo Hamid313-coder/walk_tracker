@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Provider} from 'react-redux';
 import {combineReducers, createStore} from 'redux';
+import SplashScreen from 'react-native-splash-screen';
 
 import AppNavigation from './src/navigation/AppNavigation';
 
@@ -16,6 +17,10 @@ export default function App() {
     userInfo: UserInfoReducer,
   });
   const store = createStore(reducers);
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   return (
     <View style={styles.container}>

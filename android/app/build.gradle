@@ -132,7 +132,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.walk__tracker"
+        applicationId "com.walk_tracker.hamid313"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -212,6 +212,7 @@ dependencies {
         implementation jscFlavor
     }
     compile project(':react-native-vector-icons')
+    implementation project(':react-native-splash-screen')
 
 }
 

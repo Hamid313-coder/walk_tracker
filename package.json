@@ -1,5 +1,5 @@
 {
-  "name": "walk__tracker",
+  "name": "walk_tracker",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -10,15 +10,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@react-native-mapbox-gl/maps": "^8.5.0",
-    "react": "17.0.1",
-    "react-native": "0.64.3",
     "@react-native-async-storage/async-storage": "^1.15.17",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-mapbox-gl/maps": "^8.5.0",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "@turf/helpers": "^6.5.0",
+    "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-native": "0.64.3",
     "react-native-accurate-step-counter": "^2.0.4",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "~2.1.0",
@@ -27,6 +27,7 @@
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-shake": "^5.1.1",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.1",
     "react-redux": "^7.2.6",

@@ -60,11 +60,10 @@ const SetWalkScreen = () => {
         <StyledButton
           title="Set & Start"
           onPress={() => {
-            console.log(!!number);
             const num = Number(number);
 
             //validation for input.
-            if (isFinite(num) && num >= 5) {
+            if (isFinite(num) && num >= 500) {
               dispatch(setSpecifiedSteps(num));
               setError('');
               navigation.navigate('map');

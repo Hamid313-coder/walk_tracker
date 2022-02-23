@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { ActivityIndicator, View } from "react-native";
-import { useDispatch } from "react-redux";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AsyncStorageLib from "@react-native-async-storage/async-storage";
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, View} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import AsyncStorageLib from '@react-native-async-storage/async-storage';
 
-import CustomScreen from "../screens/CustomScreen";
-import MapScreen from "../screens/MapScreen";
-import MessageScreen from "../screens/MessageScreen";
-import SetWalkScreen from "../screens/SetWalkScreen";
+import CustomScreen from '../screens/CustomScreen';
+import MapScreen from '../screens/MapScreen';
+import MessageScreen from '../screens/MessageScreen';
+import SetWalkScreen from '../screens/SetWalkScreen';
 
-import { setUserInfo } from "../store/actions/UserInfoActions";
+import {setUserInfo} from '../store/actions/UserInfoActions';
 
-import colors from "../constants/colors";
-import GlobalStyles from "../constants/GlobalStyles";
+import colors from '../constants/colors';
+import GlobalStyles from '../constants/GlobalStyles';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +26,7 @@ function AppNavigation() {
   useEffect(() => {
     (async () => {
       setIsLoading(true);
-      const userInfo = JSON.parse(await AsyncStorageLib.getItem("userInfo"));
+      const userInfo = JSON.parse(await AsyncStorageLib.getItem('userInfo'));
       userInfo
         ? dispatch(setUserInfo(userInfo.gender, userInfo.userHeight))
         : null;
@@ -45,9 +45,8 @@ function AppNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={isUserInfoAvailable ? "setWalk" : "custom"}
-        screenOptions={{ headerShown: false, statusBarStyle: "dark" }}
-      >
+        initialRouteName={isUserInfoAvailable ? 'setWalk' : 'custom'}
+        screenOptions={{headerShown: false, statusBarStyle: 'auto'}}>
         <Stack.Screen name="custom" component={CustomScreen} />
         <Stack.Screen name="setWalk" component={SetWalkScreen} />
         <Stack.Screen name="map" component={MapScreen} />

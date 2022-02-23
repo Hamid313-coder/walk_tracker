@@ -114,13 +114,12 @@ function MapScreen() {
   return (
     <View style={styles.container}>
       <Pressable onPress={() => navigation.goBack()} style={styles.backButton}>
-        <Ionicons name="arrow-back" size={24} color="black" />
+        <Ionicons name="arrow-back" size={24} color="#2b2b2d" />
       </Pressable>
       {curLocation && (
         <MapboxGL.MapView
           style={styles.map}
-          // styleURL={MapboxGL?.StyleURL?.Outdoors}
-        >
+          styleURL={MapboxGL?.StyleURL?.Outdoors}>
           {route && (
             <MapboxGL.ShapeSource shape={route} id="lineShape">
               <MapboxGL.LineLayer

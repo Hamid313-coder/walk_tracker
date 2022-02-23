@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.walk__tracker",
+    package = "com.walk_tracker.hamid313",
 )
 
 android_resource(
     name = "res",
-    package = "com.walk__tracker",
+    package = "com.walk_tracker.hamid313",
     res = "src/main/res",
 )
 
